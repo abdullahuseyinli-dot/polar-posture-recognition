@@ -1,0 +1,82 @@
+{
+  "protocol_id": "polar_competitive_benchmark_20260920_v1",
+  "status": "DEVELOPMENT_PLAN_BEFORE_NEW_MODEL_SCORES",
+  "historical_four_class_result": {
+    "macro_f1": 0.9398833285904803,
+    "accuracy": 0.9456293181135476,
+    "test_rows": 3329,
+    "immutable": true,
+    "historical_test_already_inspected": true
+  },
+  "nine_class_task": {
+    "labels": ["sitting", "standing", "walking", "running", "bending", "jumping", "lying", "squatting", "stretching"],
+    "official_rows": 35324,
+    "audited_train_rows": 21057,
+    "audited_validation_rows": 6966,
+    "audited_test_rows": 6984,
+    "quarantined_rows": 317,
+    "quarantined_components": 154,
+    "split_membership_moved": false,
+    "input": "RGB plus provided annotated target-person box",
+    "test_wholly_unseen": false,
+    "historical_exposure": "four-class test subset previously inspected; remaining labels extend a partly exposed benchmark",
+    "original_paper_baseline_values_verified": false,
+    "audited_and_original_populations_are_distinct": true
+  },
+  "test_access_during_current_queue": false,
+  "primary_metric": "macro_f1",
+  "current_queue": {
+    "scope": "development_only",
+    "models": ["dinov2_base_multilayer_reference", "siglip2_base", "convnextv2_base", "dinov3_base", "dinov3_large_optional_capacity_check"],
+    "views": ["full_frame", "person_context_10", "concatenated_two_views"],
+    "feature_extraction": "CUDA; shared train/validation-only pool; task-specific aligned labels",
+    "preprocessing": "historical POLAR control for DINOv2; pinned or explicitly provenance-marked recovered official-library processor for challengers",
+    "linear_head": {"device": "CUDA", "C": [0.001, 0.01, 0.1, 1.0], "class_weight": "balanced", "max_iterations": 500},
+    "rbf_head": {"kernel_device": "CUDA_FP32_no_TF32", "solver": "CPU_libsvm", "C": 10.0, "gamma": "1/feature_dimensions", "view": "concatenated_two_views", "calibration": "five_source_grouped_folds; training-only scaling and sigmoid fitting"},
+    "nine_class_adaptation": {
+      "initialization": "original pinned DINOv2 foundation; never historical train+validation final checkpoint",
+      "trainable_scope": "top_four_transformer_blocks_and_classifier",
+      "view": "person_context_25",
+      "loss": "unweighted_cross_entropy",
+      "head_lr": 0.001,
+      "backbone_lr": 0.000005,
+      "weight_decay": 0.0001,
+      "dropout": 0.1,
+      "batch_size": 16,
+      "accumulation": 4,
+      "max_epochs": 20,
+      "minimum_epochs": 3,
+      "patience": 4,
+      "warmup_fraction": 0.1,
+      "seed42_recipes": ["historical_mild_crop", "person_preserving_padding"],
+      "confirmation": "select recipe using only seed42 validation macro-F1/NLL; lock it before seeds52/62; keep all three seeds"
+    },
+    "fusion": ["uniform_all_available_development_selected_family_winners", "uniform_top_two_validation_candidates"],
+    "selection_tie_break": "macro_F1_then_NLL_then_lexical_candidate_id",
+    "stop_after": "development_report; independent review before final fitting or any test evaluation"
+  },
+  "subsequent_required_phases": [
+    "Review development results and model availability, selected checkpoint replay, source/provenance integrity, view and representation ablations.",
+    "Run bounded adapted modern challengers with three seeds; weak frozen ConvNeXt is not a sufficient convolutional comparator.",
+    "Freeze exact standalone/fusion recipes, training budgets, metrics and complete list of confirmatory comparisons before final refit.",
+    "Refit from foundation weights on permitted development data; use fixed epoch budgets; evaluate declared test cohorts in one batch, never tune using scores.",
+    "Compare four-class challengers to saved historical ensemble predictions on identical3329rows; keep nine-class original/audited results distinct.",
+    "Compute per-class metrics, NLL/Brier/calibration, paired stratified/source-group sensitivity bootstrap, Holm-controlled comparisons, seed variance, error transitions and cost.",
+    "If benchmark superiority is supported, describe its exact scope and date; no general deployment or original-paper SOTA claim without matched external evidence."
+  ],
+  "confidence_gate": {
+    "paired_macro_f1_interval": "95percent lower bound >0 against prespecified strongest comparable challenger; multiple-comparison adjustment declared before test",
+    "replication": "three-seed evidence with no favorable-seed selection",
+    "integrity": "exact row/label order, verified data/checkpoints/caches, validated optimizer and saved-checkpoint prediction replay",
+    "inconclusive": "interval includeszero -> competitive/uncertain, not clear superiority",
+    "independent_confirmation": "genuinely untouched data required for claims of fresh confirmation after test-driven development; reshuffling used images is not independence"
+  },
+  "known_limits": [
+    "No verified subject/session-disjoint identities.",
+    "No fresh all-nine-class embedding-retrieval overlap audit yet.",
+    "Pretraining overlap with foundation model corpora cannot be ruled out.",
+    "Provided person boxes exclude detection/tracking errors.",
+    "No verified original POLAR paper numerical baseline table yet.",
+    "Winning the present bounded panel is not proof of global best performance."
+  ]
+}
