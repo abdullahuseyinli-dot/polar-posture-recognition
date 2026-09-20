@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "matplotlib_version": "3.11.2",
+  "scope": "Public aggregates; no training or new performance evaluation",
+  "sources": {
+    "results/polar_test_metrics.csv": {
+      "sha256": "81b77032c06d27ea0c76771d4632a3ca51f2c87091bd4548ab063196fa6c2392"
+    },
+    "results/polar_test_uncertainty.json": {
+      "sha256": "e93abad81540948eaf7e84c25609b3d87ef80dc32c2ecee593eae2e8b888a21b"
+    },
+    "results/vcoco_v2/official_test_metrics.csv": {
+      "sha256": "32dd7d3c878b97f263d0238d7cef916233505bae73e38119ba60386097bee639"
+    },
+    "results/vcoco_v2/official_test_uncertainty.json": {
+      "sha256": "a13b9fe3f316f3b1fd50e3776e8758997e91fcec02d65f53fc8d7c87bc839932"
+    },
+    "results/vcoco_v3/source_tag_development_metrics.csv": {
+      "sha256": "79f5c38a27d28f12064698950f2748271cfb77ba3194570167ed84d682a7bcbd"
+    },
+    "tools/render_project_figures.py": {
+      "sha256": "2d4dd944204d1a304a60e415cc20e48059031252bb1596b84639667d93faa7d1"
+    }
+  },
+  "artifacts": {
+    "benchmark_results.png": {
+      "sha256": "4b3a9f0dfdf0462c4a9fb872e6ff6bdddf11aef466203d18737c15ca7e5d7151"
+    },
+    "benchmark_results.svg": {
+      "sha256": "7eb42dc42888e0a402726e4092935dc3fc50b7b5cab8fe2869a3ff707bfe6bd9"
+    },
+    "transfer_results.png": {
+      "sha256": "a91accde14be7b7386d0f5b3d2d3242edda2441fbd9f1e9569ddf90ee6517c93"
+    },
+    "transfer_results.svg": {
+      "sha256": "83fd4862ab3f15618ec4212389fa9f8e0cbd3e2f219cef22d7ed2eda84e61247"
+    },
+    "representation_results.png": {
+      "sha256": "e453008d2131ccc8b7308363f138f2f9f2320833757ded2233a2d44932015533"
+    },
+    "representation_results.svg": {
+      "sha256": "427aaa43032473f3e1acee4f256499e39450a3c0c2ab2515fea49fe45d188bc0"
+    }
+  }
+}

@@ -1,0 +1,2 @@
+2320afe92e2d78d53e2805fc720f1d0385656205b23e4e38bba7929fa1026ada  output/pdf/polar_public_report_v1.0.0.pdf
+fc8fc5948344ff82b58dd265919ba77900da3f76948cab0223cfa208c8cd3d72  results/polar_study_v1.0.0_manifest.json

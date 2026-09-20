@@ -1,0 +1,33 @@
+name: quality-gates
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install CPU PyTorch
+        run: >-
+          python -m pip install
+          --index-url https://download.pytorch.org/whl/cpu
+          torch==2.11.0 torchvision==0.26.0
+      - name: Install project and validation dependencies
+        run: python -m pip install -e ".[dev,notebook,report]"
+      - name: Style regression check
+        run: python tools/check_style.py
+      - name: Compile
+        run: python -m compileall -q src experiments tools
+      - name: Test
+        run: python -m pytest
+      - name: Verify evidence, figures and current documentation
+        run: python tools/check_project.py

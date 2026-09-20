@@ -1,0 +1,24 @@
+.gitattributes text eol=lf
+* text=auto eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ipynb text eol=lf linguist-language=Jupyter Notebook
+*.cff text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.svg text eol=lf
+*.pt binary
+
+# Never include historical third-party photo composites in distributable archives.
+assets/champion_error_gallery.png export-ignore
+assets/convnext_small_faithfulness_gallery.jpg export-ignore
+assets/dinov2_small_faithfulness_gallery.jpg export-ignore
+assets/probability_blend_faithfulness_gallery.jpg export-ignore

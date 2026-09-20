@@ -1,0 +1,6 @@
+{
+  "diagnostics": [],
+  "ruff_version": "ruff 0.16.6",
+  "schema_version": 1,
+  "scope": "Pre-existing research-source style diagnostics recorded during portfolio cleanup; no newly introduced findings allowed"
+}

@@ -1,0 +1,209 @@
+{
+  "protocol_version": "1.4.0",
+  "locked_date": "2026-08-23",
+  "status": "PRE_TEST_LOCKED",
+  "dataset": {
+    "name": "POLAR",
+    "version": 1,
+    "doi": "10.17632/hvnsh7rwz7.1",
+    "official_splits": ["train", "val", "test"],
+    "primary_labels": ["sitting", "standing", "walking", "running"],
+    "source_to_primary": {
+      "sit": "sitting",
+      "stand": "standing",
+      "walk": "walking",
+      "run": "running"
+    },
+    "secondary_labels": ["sitting", "standing", "walking_running"],
+    "primary_to_secondary": {
+      "sitting": "sitting",
+      "standing": "standing",
+      "walking": "walking_running",
+      "running": "walking_running"
+    },
+    "expected_target_counts": {
+      "train": {"sitting": 3043, "standing": 2740, "walking": 2002, "running": 2230},
+      "val": {"sitting": 1015, "standing": 980, "walking": 654, "running": 716},
+      "test": {"sitting": 1043, "standing": 936, "walking": 641, "running": 739}
+    }
+  },
+  "archive_sha256": {
+    "JPEGImages.z01": "2c70432788d221627ac5a7eeb67a044acf7e39e3f51323cd253e2fa3f946831d",
+    "JPEGImages.z02": "ae23efcbd37dc96b3bc052ff703a51ec594c52a0101e8bdb356c382dd1bc3865",
+    "JPEGImages.z03": "ce622c898f7898e288619632c3e84b490cd40683cb771e0f185fcfb545d68b6a",
+    "JPEGImages.z04": "3e7ef5f09fcf6bb7ef9160b43f4a23ee7036308231eba553e61535b07d4860a0",
+    "JPEGImages.zip": "a911de85a38f5d428408f2f377f839caa568d023f6c4b7c11cae46e2e4de4846"
+  },
+  "deduplication": {
+    "exact": "sha256",
+    "perceptual_hash": "phash64",
+    "review_max_hamming_distance": 6,
+    "source_related_normalized_grayscale_size": [128, 128],
+    "source_related_minimum_correlation": 0.9,
+    "source_related_pair_policy": "phash_distance_lte_6_and_correlation_gte_0.9",
+    "frozen_dinov2_retrieval_candidate_cosine": 0.985,
+    "embedding_only_can_exclude": false,
+    "cross_boundary_confirmed_duplicate_policy": "exclude_connected_group_from_all_study_splits",
+    "unfiltered_official_role": "sensitivity_only_OFFICIAL_UNFILTERED_SOURCE_OVERLAP",
+    "test_examples_may_move_to_training": false
+  },
+  "views": ["full_frame", "person_context_10", "person_context_25", "validation_locked_late_fusion"],
+  "required_model_families": ["convnext_small", "dinov2_small"],
+  "optional_capacity_extension": ["dinov2_base"],
+  "adaptation": {
+    "convnext_small": ["head_only", "last_stage", "full_backbone"],
+    "dinov2_small": ["probe_only", "top_4_blocks", "full_backbone"]
+  },
+  "full_adaptation_layer_decay": {
+    "dinov2_small": 0.75,
+    "dinov2_base": 0.75,
+    "convnext_small": 0.7,
+    "locked_before_partial_or_full_adaptation": true,
+    "test_rows_read_at_lock": 0
+  },
+  "regularization_screen": {
+    "dropout": [0.0, 0.1, 0.2],
+    "augmentation": ["mild", "moderate"],
+    "mixup_alpha": [0.0, 0.2],
+    "label_smoothing": [0.0, 0.05],
+    "class_balance": ["unweighted", "inverse_frequency"]
+  },
+  "frozen_classifier_screen": {
+    "status": "PRE_TEST_AMENDMENT",
+    "rationale": "Compare suitable linear-margin, nonlinear-margin, and covariance-aware classifiers on the strongest frozen representation without touching the held-out test set.",
+    "representation": {
+      "model_kind": "dinov2_base",
+      "views": ["full_frame", "person_context_10"],
+      "fusion": "feature_concatenation",
+      "selection_origin": "winner_of_the_predeclared_development_probe_screen"
+    },
+    "hyperparameter_selection": {
+      "data": "training_rows_only",
+      "method": "stratified_3_fold_cross_validation",
+      "primary_metric": "macro_f1",
+      "tie_breakers": ["balanced_accuracy", "lower_complexity"]
+    },
+    "validation_role": "one_comparison_per_classifier_family_after_train_only_tuning",
+    "classifiers": {
+      "multinomial_logistic": {
+        "C": [0.001, 0.01, 0.1, 1.0],
+        "class_weight": ["none", "balanced"]
+      },
+      "linear_svm": {
+        "C": [0.0001, 0.001, 0.01, 0.1, 1.0],
+        "class_weight": ["none", "balanced"],
+        "probability_calibration": "five_fold_sigmoid_on_training_rows"
+      },
+      "rbf_svm": {
+        "C": [1.0, 10.0, 100.0],
+        "gamma_over_one_per_feature": [0.25, 1.0, 4.0],
+        "class_weight": ["none", "balanced"],
+        "probability_calibration": "five_fold_sigmoid_on_training_rows"
+      },
+      "shrinkage_lda": {
+        "shrinkage": ["auto", 0.01, 0.1, 0.5]
+      }
+    },
+    "test_rows_read": 0,
+    "test_used_for_selection": false
+  },
+  "source_aligned_representation_extension": {
+    "status": "PRE_TEST_AMENDMENT",
+    "rationale": "The official DINOv2 linear classifier exposes a four-block representation that was not present in the initial final-token probe.",
+    "primary_source": "https://github.com/facebookresearch/dinov2/blob/main/dinov2/hub/classifiers.py",
+    "representation": "last_four_normalized_class_tokens_plus_final_normalized_mean_patch_token",
+    "model_kind": "dinov2_base",
+    "views": ["full_frame", "person_context_10"],
+    "fusion": "feature_concatenation",
+    "classifiers": {
+      "standardized_multinomial_logistic": {
+        "C": [0.0001, 0.001, 0.01, 0.1],
+        "class_weight": ["none", "balanced"]
+      },
+      "transferred_calibrated_rbf_svm": {
+        "C": 10.0,
+        "gamma": "one_over_fused_feature_count",
+        "class_weight": "none",
+        "calibration": "five_fold_sigmoid_on_training_rows",
+        "selection_origin": "train_only_CV_winner_from_protocol_1.3.0_final_token_screen",
+        "retuned_on_multilayer_features": false
+      }
+    },
+    "selection_data": "development_train_and_validation_only",
+    "test_rows_read": 0,
+    "test_used_for_selection": false
+  },
+  "capacity_extension": {
+    "status": "PRE_TEST_AMENDMENT",
+    "rationale": "Measure whether the higher-capacity DINOv2-Base backbone adds value beyond its frozen representation.",
+    "model_kind": "dinov2_base",
+    "view": "person_context_25",
+    "strategies": ["top_4_blocks", "full_backbone"],
+    "dropout": 0.1,
+    "augmentation": "mild",
+    "weight_decay": 0.0001,
+    "layer_decay": {
+      "top_4_blocks": null,
+      "full_backbone": 0.75
+    },
+    "screen_seed": 42,
+    "test_rows_read": 0,
+    "test_used_for_selection": false
+  },
+  "targeted_regularization_extension": {
+    "status": "PRE_TEST_AMENDMENT",
+    "rationale": "Bound two remaining plausible sources of overfitting without opening a broad post-hoc search.",
+    "baseline": "dinov2_small_full_backbone_dropout_0.1_mild_weight_decay_0.0001",
+    "contrasts": [
+      {
+        "id": "weight_decay_0.01",
+        "changed_field": "weight_decay",
+        "value": 0.01
+      },
+      {
+        "id": "no_random_erasing",
+        "changed_field": "augmentation",
+        "value": "mild_no_random_erasing"
+      }
+    ],
+    "screen_seed": 42,
+    "test_rows_read": 0,
+    "test_used_for_selection": false
+  },
+  "selection": {
+    "screen_seed": 42,
+    "confirmation_seeds": [42, 52, 62],
+    "primary_metric": "macro_f1",
+    "practical_tie_absolute": 0.002,
+    "confirmation_band_absolute": 0.005,
+    "tie_breakers": ["lower_seed_std", "lower_log_loss", "lower_ece_15", "lower_training_cost"],
+    "test_used_for_selection": false
+  },
+  "scale": {
+    "subset_seed": 20260822,
+    "nested_train_sizes": [242, 500, 1000, 3000, "all"],
+    "seeds": [42, 52, 62],
+    "fixed_validation": true
+  },
+  "test_gate": {
+    "required_state": "FINAL_LOCK_WRITTEN_AND_ALL_FINAL_FITS_COMPLETE",
+    "test_open_count": 1,
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 20260822
+  },
+  "metrics": [
+    "macro_f1",
+    "accuracy",
+    "balanced_accuracy",
+    "per_class_precision_recall_f1",
+    "log_loss",
+    "multiclass_brier",
+    "ece_15"
+  ],
+  "external_validation": {
+    "dataset": "V-COCO",
+    "mixed_image_policy": "exclude_from_image_level_evaluation",
+    "legacy_coco_overlap_policy": "exclude",
+    "selection_role": "none"
+  }
+}

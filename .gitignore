@@ -1,0 +1,60 @@
+# Local data and experiment state
+data/*
+!data/README.md
+!data/manifest.csv
+.runs/
+tmp/
+artifacts/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# Locally retained qualitative composites with third-party source photographs
+/assets/champion_error_gallery.png
+/assets/convnext_small_faithfulness_gallery.jpg
+/assets/dinov2_small_faithfulness_gallery.jpg
+/assets/probability_blend_faithfulness_gallery.jpg
+paper/build/
+paper/*.aux
+paper/*.bbl
+paper/*.bcf
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.run.xml
+paper/*.synctex.gz
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+.venv-*/
+venv/
+build/
+dist/
+*.whl
+uv.lock
+
+# Notebooks and editors
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+
+# Platform files
+.DS_Store
+Thumbs.db
+desktop.ini
