@@ -41,3 +41,10 @@ to change the nominated recipe or retune on the test set.
 
 The current public four-class result and the separate ARFTR repository are
 unchanged. No GitHub push or public result replacement is part of this launch.
+
+Recovery update, 21 September at 19:20 Europe/London: a Windows status-file
+replacement failure interrupted DINOv2 seed 52. See [RECOVERY.md](RECOVERY.md)
+for the preserved incident evidence, tested telemetry-only retry adapter,
+authorized epoch-14 continuation, and the safe status-polling command. The
+original launcher above is retained as the launch record; the recovery launcher
+is now managing this same locked queue.
