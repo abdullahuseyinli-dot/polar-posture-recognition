@@ -1,0 +1,2 @@
+# Preserve exact bytes of the hash-bound generated evidence across platforms.
+* -text
