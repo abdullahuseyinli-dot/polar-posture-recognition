@@ -1,5 +1,10 @@
 # Status-I/O incident and authorized continuation
 
+This records the earlier training recovery. After training finished, evaluation
+encountered a separate processor-metadata issue. The current continuation is
+documented in [METADATA_RECOVERY.md](METADATA_RECOVERY.md); do not launch this
+earlier supervisor alongside it.
+
 On 21 September 2026 at **18:35 Europe/London**, the supervisor stopped during
 nine-class DINOv2 seed 52, epoch 14. The exception was Windows `WinError 5`
 while atomically replacing `progress.json`. It did not occur in a model forward
@@ -78,7 +83,7 @@ files with `Get-Content` or a file viewer that may hold them open:
   --run-dir .runs\final_evaluation_20260921_1322
 ```
 
-The recovery supervisor command is already running; do not launch a duplicate:
+The earlier recovery supervisor command is preserved as an incident record:
 
 ```powershell
 .venv\Scripts\python.exe tools\polar_status_io_recovery.py `

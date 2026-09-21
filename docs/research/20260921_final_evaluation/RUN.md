@@ -27,8 +27,9 @@ From the repository root, the supervisor command is:
   --selection-lock .runs\final_evaluation_20260921_1322\final_selection_lock.json
 ```
 
-It is already launched as a hidden process; do not launch a second supervisor.
-Read `queue_status.json` and `queue_receipts.json` for status. A
+It was launched as a hidden process; do not launch a second supervisor.
+Use `tools/polar_locked_status.py --run-dir .runs/final_evaluation_20260921_1322`
+to read status with short-lived Windows-safe handles. A
 `STOP_AFTER_CURRENT_JOB` file in the run directory asks it to stop safely after
 the active job. There is no automatic model retry or test-driven search.
 
@@ -47,4 +48,11 @@ replacement failure interrupted DINOv2 seed 52. See [RECOVERY.md](RECOVERY.md)
 for the preserved incident evidence, tested telemetry-only retry adapter,
 authorized epoch-14 continuation, and the safe status-polling command. The
 original launcher above is retained as the launch record; the recovery launcher
-is now managing this same locked queue.
+managed this same locked queue.
+
+Post-training recovery, 21 September: all 23 fits passed verification, but frozen
+SigLIP2 feature extraction stopped on an in-memory tuple versus JSON-list
+comparison. See [METADATA_RECOVERY.md](METADATA_RECOVERY.md) for the narrowly
+scoped repair, all-backbone synthetic CUDA parity checks and the current recovery
+command. Training is complete; final evaluation completion is tracked by the
+root completion marker described above, not by this launch note.
