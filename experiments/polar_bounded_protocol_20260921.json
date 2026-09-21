@@ -1,0 +1,103 @@
+{
+  "protocol_id": "polar_bounded_adaptation_20260921_v1",
+  "phase": "one_bounded_development_phase_after_completed_20260920_screen",
+  "test_access": "FORBIDDEN",
+  "historical_results": "READ_ONLY",
+  "tasks": [9, 4],
+  "models": ["siglip2_base", "convnextv2_base"],
+  "seeds": [42, 52, 62],
+  "maximum_production_fits": 12,
+  "engineering_smokes": 4,
+  "rationale": {
+    "primary": "Person-preserving DINOv2 adaptation replicated across three seeds; frozen SigLIP2 added complementary information. Test whether adapting SigLIP2 improves rather than destroys that complementarity.",
+    "control": "A frozen ConvNeXtV2 score is not a sufficient adapted convolutional comparison. Include a bounded last-stage adaptation control with the same data, view, seeds and epoch budget.",
+    "not_claimed": "No global architecture ranking, fully tuned comparator, novel mechanism, causal isolation of every augmentation, or state-of-the-art result."
+  },
+  "training": {
+    "initialization": "original_pinned_foundation_only",
+    "siglip2_scope": "last_four_vision_encoder_blocks_plus_post_layernorm_and_pretrained_attention_pooler",
+    "convnextv2_scope": "last_encoder_stage_plus_final_layernorm",
+    "classification_head": "new_dropout_0.1_linear_head",
+    "view": "provided_person_box_plus_25_percent_context",
+    "geometry": "person_safe_mild_square_padding_224; same fixed geometry family as successful DINOv2; model_specific_fill_and_normalization",
+    "normalization": "pinned_official_processor_mean_std; never_imagenet_normalization_for_siglip2",
+    "loss": "unweighted_cross_entropy_no_smoothing_no_mixup",
+    "optimizer": "AdamW",
+    "head_lr": 0.001,
+    "backbone_lr": 0.000005,
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "batch_size": 16,
+    "gradient_accumulation": 4,
+    "max_epochs": 20,
+    "minimum_epochs": 3,
+    "patience": 4,
+    "warmup_fraction": 0.1,
+    "schedule": "cosine",
+    "checkpoint_selection": "validation_macro_f1_then_nll",
+    "precision": "CUDA_bfloat16_if_supported_else_float16_with_GradScaler",
+    "frozen_prefix": "eval_mode; no_gradients",
+    "no_automatic_performance_retries": true,
+    "same_epoch_budget_not_exact_compute_match": true
+  },
+  "candidate_family": {
+    "incumbent": "unchanged_previous_uniform_top_two_validation",
+    "new_standalones": ["siglip2_adapted_3seeds", "convnextv2_adapted_3seeds"],
+    "anchor_9": "previous_person_preserving_dinov2_adapted_3seeds",
+    "anchor_4": "previous_frozen_dinov2_base",
+    "replacement_fusion": "0.5*anchor + 0.5*siglip2_adapted_3seeds",
+    "conservative_fusion": "0.5*incumbent + 0.5*replacement_fusion",
+    "maximum_new_fusions_per_task": 2,
+    "seed_aggregation": "equal_probability_mean_of_all_three_seeds; no_seed_selection",
+    "seed_sensitivity": "replace_new_adapted_ensemble_with_each_single_seed; keep_prior_anchor_and_incumbent_fixed",
+    "no_learned_weights_thresholds_or_router": true,
+    "no_fusion_with_convnext_control": true
+  },
+  "development_promotion_gate": {
+    "minimum_macro_f1_gain": 0.002,
+    "minimum_net_corrections": 1,
+    "all_seed_counterparts_positive_macro_f1_gain": true,
+    "all_seed_counterparts_positive_net_corrections": true,
+    "maximum_single_class_f1_drop": 0.01,
+    "maximum_nll_increase": 0.02,
+    "maximum_brier_increase": 0.01,
+    "selection": "among_eligible_candidates_macro_f1_then_nll_then_name; otherwise_retain_incumbent",
+    "meaning": "conservative_development_finalist_nomination_only; not_confirmatory_significance_or_automatic_published_result_replacement"
+  },
+  "diagnostics": [
+    "macro_f1_accuracy_errors_per_class_confusion_nll_brier_ece",
+    "all_seed_scores_mean_sample_sd_and_prediction_replay",
+    "rescues_harms_net_corrections_jaccard_against_incumbent",
+    "paired_1000_draw_row_stratified_and_source_group_bootstrap_seed_20260921; descriptive_selected_validation_not_confirmatory"
+  ],
+  "integrity_gates": [
+    "prior_queue_complete_and_all_completed_marker_hashes_match",
+    "prior_candidate_metrics_recalculated_from_saved_predictions_with_exact_row_label_alignment",
+    "audited_manifests_and_prior_probabilities_hash_locked_before_new_fits",
+    "reject_test_manifest_before_reading_labels",
+    "original_foundation_weights_processor_and_trainable_parameter_scope_recorded",
+    "CUDA_smoke_for_each_model_and_task; finite_loss_and_gradients",
+    "saved_checkpoint_replay_exact_labels_predictions_and_probability_difference_at_most_1e-5",
+    "all_three_seeds_present_for_each_new_model_and_task; never_choose_favorable_seed"
+  ],
+  "stop_rules": {
+    "engineering_failure": "stop_queue_and_preserve_logs; no_silent_skip_substitution_or_performance_retry",
+    "fit_deadline_seconds": 10800,
+    "smoke_deadline_seconds": 900,
+    "after_bounded_budget": "stop_at_development_review; no_auto_new_recipes_or_test_access",
+    "no_eligible_gain": "retain_previous_winner_and_move_to_locked_evaluation; do_not_launch_another_validation_search"
+  },
+  "remaining_after_this_phase": [
+    "Review exact final recipes and refit budgets; lock every final test comparison before opening test predictions.",
+    "Run fixed-budget final refits and paired test evaluation, with declared uncertainty and multiplicity controls.",
+    "Resolve original-paper numerical/protocol comparability and benchmark input privileges before any SOTA claim."
+  ],
+  "limits": [
+    "Development validation already used for architecture, checkpoint and fusion selection; selected scores and bootstrap intervals are optimistic/descriptive.",
+    "Nine-class test includes previously inspected four-class rows; cannot claim wholly fresh confirmation.",
+    "Source auditing does not prove subject/session independence or exclude foundation-pretraining overlap.",
+    "Annotated target-person boxes are assumed inputs; no detector performance is measured.",
+    "Matched epoch budgets are not matched FLOPs, pretrained corpus size, or trainable parameter counts.",
+    "This fixed partial-unfreezing control does not exhaust ConvNeXtV2 or SigLIP2 optimization."
+  ]
+}
