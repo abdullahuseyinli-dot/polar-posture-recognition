@@ -1,0 +1,153 @@
+{
+  "implementation_sha256": "4b3c80db071b96a4b7d062a6dd719ba577f0ab7bb1ecbcd5e831336b5eb424fe",
+  "prediction_manifest_sha256": "11a3bbb446a8db8c2823ebd9e8ff7a86029248e27bc7e1b4cdbbb502f6837249",
+  "purpose": "evaluate_fixed_nominees_no_model_selection",
+  "selection_lock_sha256": "b8334696ee21ab850c9b8d364d89ace59f8065e6551dae62bf9defe5185a5bbe",
+  "statistics": {
+    "alpha": 0.05,
+    "alternative": "two_sided",
+    "bootstrap_draws": 5000,
+    "comparisons": [
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__prior_incumbent",
+        "primary": true,
+        "reference": "prior_incumbent",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__replacement_fusion",
+        "primary": false,
+        "reference": "replacement_fusion",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__frozen_dinov2_base",
+        "primary": false,
+        "reference": "frozen_dinov2_base",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__frozen_siglip2_base",
+        "primary": false,
+        "reference": "frozen_siglip2_base",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__frozen_dinov3_base",
+        "primary": false,
+        "reference": "frozen_dinov3_base",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__frozen_convnextv2_base",
+        "primary": false,
+        "reference": "frozen_convnextv2_base",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__adapted_siglip2",
+        "primary": false,
+        "reference": "adapted_siglip2",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__adapted_convnextv2",
+        "primary": false,
+        "reference": "adapted_convnextv2",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar9__vs__adapted_dinov2",
+        "primary": true,
+        "reference": "adapted_dinov2",
+        "task": "polar9"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__prior_incumbent",
+        "primary": true,
+        "reference": "prior_incumbent",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__replacement_fusion",
+        "primary": false,
+        "reference": "replacement_fusion",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__frozen_dinov2_base",
+        "primary": false,
+        "reference": "frozen_dinov2_base",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__frozen_siglip2_base",
+        "primary": true,
+        "reference": "frozen_siglip2_base",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__frozen_dinov3_base",
+        "primary": false,
+        "reference": "frozen_dinov3_base",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__frozen_convnextv2_base",
+        "primary": false,
+        "reference": "frozen_convnextv2_base",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__adapted_siglip2",
+        "primary": false,
+        "reference": "adapted_siglip2",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__adapted_convnextv2",
+        "primary": false,
+        "reference": "adapted_convnextv2",
+        "task": "polar4"
+      },
+      {
+        "candidate": "conservative_fusion",
+        "id": "polar4__vs__historical_ensemble",
+        "primary": true,
+        "reference": "historical_ensemble",
+        "task": "polar4"
+      }
+    ],
+    "gates": {
+      "all_seed_counterparts_positive": true,
+      "holm_p_lt": 0.05,
+      "max_brier_increase": 0.01,
+      "max_nll_increase": 0.02,
+      "max_per_class_f1_drop": 0.01,
+      "positive_macro_f1": true,
+      "positive_net_corrections": true,
+      "source_group_delta_ci_lower_gt": 0
+    },
+    "multiplicity": "one_Holm_family_all_18_comparisons",
+    "randomization_draws": 10000,
+    "randomization_unit": "detected_source_group",
+    "seed": 20260921
+  }
+}

@@ -1,5 +1,9 @@
 # Legacy comparison-archive recovery
 
+**Outcome: the full queue completed at 23:43 Europe/London on 21 September
+2026.** See [verified final results](RESULTS.md). No supervisor remains running;
+the command below is retained for reproducibility, not as a pending action.
+
 The metadata repair succeeded: all eight held-out feature caches completed and
 passed integrity checks. At **23:15 Europe/London on 21 September 2026**, the queue
 then stopped in the four-class historical comparator. Ten new four-class

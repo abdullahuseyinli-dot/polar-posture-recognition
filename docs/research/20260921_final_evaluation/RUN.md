@@ -1,5 +1,11 @@
 # Final evaluation run
 
+**Final status: completed at 23:43 Europe/London on 21 September 2026.**
+All 32 jobs passed their engineering/completion checks. Both nominees have
+positive point gains but fail their full promotion gates against the immediate
+priors. See [verified results and decision](RESULTS.md). The entries below are
+the chronological launch and recovery record, not a current pending status.
+
 Launched 21 September 2026 at 13:23 Europe/London. Final scores are pending;
 this document records the launch, not completion or an improvement claim.
 

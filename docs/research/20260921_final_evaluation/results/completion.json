@@ -1,0 +1,10 @@
+{
+  "automatic_promotion": false,
+  "comparison_summary_sha256": "5beab5852a8aea3375a2b7425308f4c89974acc2f135c1411d6994a4e52b813a",
+  "completed_jobs": 32,
+  "completed_utc": "2026-09-21T22:43:29.218039+00:00",
+  "historical_files_unchanged": true,
+  "selection_lock_sha256": "b8334696ee21ab850c9b8d364d89ace59f8065e6551dae62bf9defe5185a5bbe",
+  "status": "LOCKED_FINAL_EVALUATION_COMPLETE",
+  "test_used_for_selection": false
+}
