@@ -56,3 +56,9 @@ comparison. See [METADATA_RECOVERY.md](METADATA_RECOVERY.md) for the narrowly
 scoped repair, all-backbone synthetic CUDA parity checks and the current recovery
 command. Training is complete; final evaluation completion is tracked by the
 root completion marker described above, not by this launch note.
+
+Legacy archive recovery, 21 September at 23:35 Europe/London: all eight feature
+caches completed. The comparator then rejected object-dtype IDs in the unchanged
+historical reference archive. [ARCHIVE_RECOVERY.md](ARCHIVE_RECOVERY.md) records
+the passive string-only decoder, actual historical replay and continuation of
+the final two jobs. No training or extraction is repeated.

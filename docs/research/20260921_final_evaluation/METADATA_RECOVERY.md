@@ -1,5 +1,10 @@
 # Processor-metadata incident and continuation
 
+This repair completed all eight feature caches. A subsequent, separate legacy
+archive issue and the current continuation are recorded in
+[ARCHIVE_RECOVERY.md](ARCHIVE_RECOVERY.md). Do not launch this earlier recovery
+alongside the current supervisor.
+
 All **23 production fits** finished and passed the original all-fit barrier.
 The test-access gate opened at **21:07 Europe/London on 21 September 2026**.
 At **21:09**, extraction stopped at the first SigLIP2 view with:
