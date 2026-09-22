@@ -26,10 +26,12 @@ Frozen encoders concatenate full-frame and 10%-context person-view embeddings.
 Training-only scaling precedes an unweighted RBF SVM with C = 10 and gamma = 1/d.
 Five source-grouped folds fit sigmoid calibration within the available training
 population. Frozen DINOv2, DINOv3, SigLIP2 and ConvNeXt V2 share this head budget,
-not identical pretraining data or compute.
+not identical feature widths, preprocessing, pretraining data or compute.
+The [feature-contract table](REPRESENTATIONS.md#frozen-feature-contracts) specifies
+the multilayer DINOv2 descriptor and each encoder's transform.
 
-Adapted encoders use a 25%-context, aspect-preserving person crop padded to 224
-pixels. DINOv2 unfreezes its last four blocks and backbone normalization layers;
+Adapted encoders use a 25%-context person crop, padded to square and then resized
+to 224 × 224 to preserve aspect ratio. DINOv2 unfreezes its last four blocks and backbone normalization layers;
 SigLIP2 unfreezes its last four blocks, final normalization and attention pooler;
 ConvNeXt V2 unfreezes its final stage and final normalization.
 

@@ -6,19 +6,24 @@ Person-centric visual representations for four- and nine-class posture recogniti
 [![Python](https://img.shields.io/badge/Python-3.11%E2%80%933.12-3776AB.svg)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-0F766E.svg)](LICENSE)
 
-This benchmark combines DINOv2 and SigLIP2 representations, person-context views,
-calibrated nonlinear classifiers and selective backbone adaptation. It compares
-DINOv2, DINOv3, SigLIP2 and ConvNeXt V2 under a common source-overlap-audited
-POLAR protocol, with locked evaluation and public per-example predictions.
+This benchmark classifies a specified person in a still image using RGB and a
+supplied bounding box. The four-class task covers **sitting, standing, walking and
+running**; the nine-class task adds **bending, jumping, lying, squatting and stretching**.
+
+The system combines person-context views, calibrated nonlinear classifiers and
+partial backbone adaptation. DINOv2, DINOv3, SigLIP2 and ConvNeXt V2 are compared
+under a source-overlap-audited POLAR protocol, with locked evaluation and public
+per-example predictions.
 
 ## Results
 
-| Audited POLAR task | Retained prior macro-F1 | Evaluated nominee macro-F1 | Nominee accuracy | Test images |
+| Audited POLAR task | Retained baseline F1 | Evaluated fusion F1 | Fusion accuracy | Test images |
 | --- | ---: | ---: | ---: | ---: |
 | Four classes | 94.75% | **95.21%** | **95.76%** | 3,329 |
 | Nine classes | 94.43% | **94.58%** | **94.72%** | 6,984 |
 
-The development-nominated conservative fusion improves on the original four-class
+F1 is macro-averaged. The conservative fusion was selected in development before
+final evaluation. It improves on the original four-class
 ensemble by **+1.22 percentage points**, and on the nine-class adapted DINOv2
 reference by **+0.68 points**, with positive paired intervals and Holm-adjusted
 p-values below 0.05. Its smaller increments over the immediate prior do not pass
@@ -46,9 +51,8 @@ the anchor and 25% to each SigLIP2 branch. The retained prior uses an equal blen
 of the anchor and frozen SigLIP2.
 
 The engineering contribution is the audited data protocol, person-preserving
-adaptation, representation comparison and reproducible fusion evaluation.
-The pretrained backbones are credited to their original authors; this is not
-a claim to have invented DINO or SigLIP.
+adaptation, representation comparison and reproducible fusion evaluation, built
+on the [original pretrained encoders](docs/REPRESENTATIONS.md#original-methods).
 
 [Architecture and evidence map](docs/ARCHITECTURE.md) ·
 [Representation study](docs/REPRESENTATIONS.md) · [Model card](docs/MODEL_CARD.md)
@@ -61,7 +65,7 @@ a claim to have invented DINO or SigLIP.
   SigLIP2 alone reaches 95.19% macro-F1; the nominated fusion's 95.21% is not a
   supported improvement over it.
 - **DINOv3 is included.** Its frozen two-view classifier reaches 93.05% on four
-  classes and 91.19% on nine. It is a measured comparator, not an omitted result.
+  classes and 91.19% on nine under the documented encoder-specific preprocessing.
 
 The nine-class nominee's remaining errors concentrate in plausible posture
 boundaries, including standing/walking and bending/stretching.

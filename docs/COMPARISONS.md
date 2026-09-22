@@ -7,7 +7,7 @@ Different labels, inputs, split memberships and metrics prevent a direct ranking
 | --- | --- | --- |
 | This repository, conservative nominee | 95.21% four-class / 94.58% nine-class macro-F1 | Audited POLAR, given-person-box classification; 3,329 / 6,984 test images; prior retention unchanged |
 | Habibi et al., ICHI 2026 | Author slides report POLAR sitting / standing / lying accuracy of 91% / 89% / 88% | Three-class transfer study; the separate 98% F1 headline belongs to a custom video dataset, not nine-class POLAR |
-| Ghamati et al., CAPA-AI, RO-MAN 2025 | 89% simulated / 80% real-world novelty adaptation accuracy | Continual novelty detection and adaptation across activities; not full nine-class POLAR macro-F1 |
+| Ghamati et al., CAPA-AI, RO-MAN 2025 | 89% simulated novelty-detection accuracy; 80% real-world adaptation accuracy | Continual novelty detection and adaptation across activities; not full nine-class POLAR macro-F1 |
 | Mandita and Rokhman, 2026 | SVM macro-F1 0.76, micro-F1 0.79 | 879 retained POLAR + curated images; multilabel FHP / PK / RSP / normal posture, 80:20 split; different clinical-posture targets |
 | Ma and Liang, original POLAR study | No numerical baseline asserted here | Matching original model/protocol result has not been verified sufficiently for a superiority claim |
 

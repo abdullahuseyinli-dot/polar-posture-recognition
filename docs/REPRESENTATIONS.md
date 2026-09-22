@@ -4,7 +4,9 @@
 
 All four frozen families use full-frame plus 10%-context person features, the
 same RBF/calibration budget and the same audited rows within each task.
-This controls downstream fitting, not pretraining, parameter count or FLOPs.
+The controls match image membership, view definitions and head-search budget.
+Feature layouts and preprocessing are encoder-specific; pretraining data,
+parameter counts and FLOPs are not matched.
 
 | Frozen encoder | Four-class macro-F1 | Nine-class macro-F1 |
 | --- | ---: | ---: |
@@ -19,6 +21,27 @@ This controls downstream fitting, not pretraining, parameter count or FLOPs.
 DINOv3-B was tested on POLAR. Its nine-class point estimate exceeds frozen DINOv2,
 but this does not establish a universal or statistically supported family ranking.
 DINOv3-L was unavailable and was not silently substituted.
+
+## Frozen feature contracts
+
+| Encoder | Features per view | Two-view dimension | Resize and crop | Normalization |
+| --- | --- | ---: | --- | --- |
+| DINOv2-B | Last four normalized CLS tokens + final-layer mean patch token | 7,680 | Short edge 256, center crop 224; bicubic | ImageNet |
+| DINOv3-B | Pooled 768-dimensional representation | 1,536 | Resize to 224 × 224; bilinear | ImageNet |
+| SigLIP2-B | Attention-pooled 768-dimensional vision representation | 1,536 | Resize to 224 × 224; bilinear | Mean / standard deviation 0.5 in every channel |
+| ConvNeXt V2-B | Pooled 1,024-dimensional representation | 2,048 | Short edge 256, center crop 224; bicubic | ImageNet |
+
+Each transform is applied to both declared views before their features are
+concatenated. The DINOv2 classifier therefore sees a larger multilayer descriptor,
+not a width-matched pooled embedding. Its 7,680-dimensional vector also gives a
+different numerical RBF gamma under the common rule gamma = 1/d.
+ConvNeXt V2's recorded processor uses `shortest_edge=224` with `crop_pct=0.875`,
+which produces the 256-pixel short-edge resize.
+
+Implementation: [model specifications and transforms](../src/hac/polar_benchmark_features.py)
+and [DINOv2 feature layout](../src/hac/polar_features.py). The DINOv3 reconstruction
+limitation below is part of the evaluated configuration, not a claim of parity
+with the provider's default recipe.
 
 ## DINOv3 provenance
 

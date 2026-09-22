@@ -7,7 +7,7 @@
       "normalized_lf": false
     },
     "tools/render_benchmark_release.py": {
-      "sha256": "0fcf396ce85a89366484e407db07a9d896cbebe3df1e7a67207e5518300d9d5b",
+      "sha256": "de662507b4192ed49aa072f59ed3a13db5c06ad9ab61d4c075b0e41050e16230",
       "normalized_lf": true
     }
   },
@@ -17,7 +17,15 @@
       "normalized_lf": false
     },
     "assets/polar_20260921/nine_class_confusion.png": {
-      "sha256": "8443572bbc7f09aabf6dfb2c3b1595ced6aaf8596ab8b419752eb9c559528754",
+      "sha256": "0b810c8a5c6b03a1dfdcc6cd60aa3f7cbf8a10d9e54a4fe22cc94d2a54215c7b",
+      "normalized_lf": false
+    },
+    "assets/polar_20260921/report_comparison.png": {
+      "sha256": "2b5945db18a498178e63873be47ef21ba94ec4a4e8d8275f5ca1651480255b97",
+      "normalized_lf": false
+    },
+    "assets/polar_20260921/report_system.png": {
+      "sha256": "4f1d97018c78bff972e3f73ce00743822fc6f737c10353f09255b6ba7e688612",
       "normalized_lf": false
     },
     "assets/polar_20260921/system_overview.png": {
@@ -29,7 +37,15 @@
       "normalized_lf": true
     },
     "assets/polar_20260921/nine_class_confusion.svg": {
-      "sha256": "273198205fac79f0be170716a0edfd015aa8fbaa2fdfb50cc0a26415a9b777ee",
+      "sha256": "50459b9597a67e123c92542851b061bd0fa38ca87163577f5c2c688c360c14df",
+      "normalized_lf": true
+    },
+    "assets/polar_20260921/report_comparison.svg": {
+      "sha256": "315a4629a24bd01ad6aa76a9196813f4834812e1e4e45a70055a8c95b6374ade",
+      "normalized_lf": true
+    },
+    "assets/polar_20260921/report_system.svg": {
+      "sha256": "e834bddc278f100189b84ebe2f634bd14d6c68607e8a4e667e8f6ad0c531d07e",
       "normalized_lf": true
     },
     "assets/polar_20260921/system_overview.svg": {

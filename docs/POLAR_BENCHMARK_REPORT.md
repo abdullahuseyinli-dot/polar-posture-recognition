@@ -79,7 +79,15 @@ Each frozen encoder provides full-frame and 10%-context person-view embeddings,
 which are concatenated. A training-only scaler and unweighted RBF classifier use
 C = 10 and gamma = 1/d. Sigmoid calibration uses five source-grouped training
 folds. The four families share the downstream search budget and split membership,
-not matched pretraining data, model capacity or total computation.
+not matched preprocessing, feature width, pretraining data, model capacity or total
+computation. DINOv2 combines four normalized CLS tokens and a final-layer mean patch
+token (7,680 dimensions across two views). DINOv3 and SigLIP2 use pooled features
+(1,536 combined dimensions); ConvNeXt V2 uses 2,048. DINOv2 and ConvNeXt V2 resize
+the short edge to 256 then center-crop to 224 with bicubic interpolation; DINOv3
+and SigLIP2 resize directly to 224 × 224 with bilinear interpolation. SigLIP2 uses
+per-channel mean and standard deviation 0.5; the others use ImageNet normalization.
+The [feature-contract table](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/blob/main/docs/REPRESENTATIONS.md#frozen-feature-contracts)
+records these distinctions.
 
 The DINOv3-B checkpoint was recovered from the transferred project and verified
 by hash. Its original processor JSON was unavailable; Transformers 5.5.3 defaults
@@ -89,8 +97,8 @@ general 256-pixel DINOv3 recipe. DINOv3-L was unavailable and is not reported.
 
 ### 3.2 Person-preserving adaptation
 
-Adapted models use a 25%-context person view with aspect-preserving padding to
-224 pixels. DINOv2 adapts its last four blocks and backbone normalization layers;
+Adapted models use a 25%-context person view, padded to square and then resized
+to 224 × 224, preserving aspect ratio. DINOv2 adapts its last four blocks and backbone normalization layers;
 SigLIP2 its last four blocks, final normalization and attention pooler; ConvNeXt V2
 its last stage and final normalization. Training uses unweighted cross-entropy,
 AdamW, head/backbone learning rates 0.001/0.000005, weight decay 0.0001, dropout
@@ -118,7 +126,7 @@ classes and a three-seed adapted model for nine classes.
 Prediction is argmax of the probability vector. Weights are development-fixed;
 no router, threshold or annotation-only support category is learned from test labels.
 
-![Figure 1. Person-centric branches and development-fixed probability fusion.](../assets/polar_20260921/system_overview.png)
+![Figure 1. Person-centric branches and development-fixed probability fusion.](../assets/polar_20260921/report_system.png)
 
 ## 4. Locked evaluation
 
@@ -142,28 +150,18 @@ inspection. Engineering recoveries concerned execution and metadata, not model
 selection; the [dated record](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/blob/main/docs/research/20260921_final_evaluation/RESULTS.md)
 links their audit receipts.
 
-## 5. Results
+<!-- pagebreak -->
 
-| System | Four-class F1 | Nine-class F1 |
-| --- | ---: | ---: |
-| Conservative nominee | 95.211% | 94.583% |
-| Retained prior | 94.746% | 94.425% |
-| Replacement control | 95.691% | 94.527% |
-| Frozen DINOv2-B | 93.089% | 90.892% |
-| Frozen DINOv3-B | 93.055% | 91.195% |
-| Frozen SigLIP2-B | 95.191% | 91.916% |
-| Frozen ConvNeXt V2-B | 87.749% | 84.873% |
-| Adapted SigLIP2-B | 95.227% | 92.853% |
-| Adapted ConvNeXt V2-B | 89.393% | 85.516% |
-| Adapted DINOv2-B | — | 93.904% |
-| Historical ensemble | 93.988% | — |
+## 5. Results
 
 The nominee makes 141 errors on four classes (95.764% accuracy) and 369 on nine
 (94.716% accuracy). Source-group 95% F1 intervals are 94.425–95.945% and
 94.031–95.110%. The replacement control's higher four-class point estimate does
-not make it a post-test-selected winner.
+not make it a post-test-selected winner. Figure 2 shows every fixed candidate;
+the [results tables](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/blob/main/docs/RESULTS.md)
+provide detailed scores and class-wise metrics.
 
-![Figure 2. All fixed comparison candidates and marginal source-group intervals.](../assets/polar_20260921/benchmark_comparison.png)
+![Figure 2. All fixed comparison candidates and marginal source-group intervals.](../assets/polar_20260921/report_comparison.png)
 
 <!-- pagebreak -->
 

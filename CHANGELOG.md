@@ -15,6 +15,10 @@
 - Updated citation/archive metadata; no Zenodo deposit or peer-review claim.
 - Pinned Transformers to the recorded 5.5.3 fitting environment after clean Linux
   CI detected an incompatible newer SigLIP module layout. Model code is unchanged.
+- Clarified the task taxonomy and encoder-specific feature/preprocessing contracts;
+  added print-sized report figures and expanded CI to Python 3.11 and 3.12.
+- Hardened evidence verification against incomplete inventories and changed
+  provenance bindings, with negative tests for missing or altered records.
 
 ## Standalone project 1.0.0 — 2026-09-20
 

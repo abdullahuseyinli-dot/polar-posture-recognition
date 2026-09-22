@@ -7,6 +7,8 @@
 | [Comparison](polar_20260921/benchmark_comparison.png) ([SVG](polar_20260921/benchmark_comparison.svg)) | All 20 predeclared candidates and marginal source-group intervals |
 | [System](polar_20260921/system_overview.png) ([SVG](polar_20260921/system_overview.svg)) | Person-centric branches, fixed blend and retained prior |
 | [Nine-class confusion](polar_20260921/nine_class_confusion.png) ([SVG](polar_20260921/nine_class_confusion.svg)) | Nominee row-normalized percentages and counts |
+| [Report comparison](polar_20260921/report_comparison.png) ([SVG](polar_20260921/report_comparison.svg)) | Stacked task panels for readable A4 reproduction; same data as the web comparison |
+| [Report system](polar_20260921/report_system.png) ([SVG](polar_20260921/report_system.svg)) | Compact version of the system diagram for the technical report |
 
 ```bash
 python tools/render_benchmark_release.py

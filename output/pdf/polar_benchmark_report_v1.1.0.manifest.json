@@ -3,7 +3,7 @@
   "project_version": "1.1.0",
   "artifacts": {
     "docs/POLAR_BENCHMARK_REPORT.md": {
-      "sha256": "dbd557996e834539fd3bb93991249ada602ed5d828d95b176bc36b76f7c1918f",
+      "sha256": "3f611867a8c75d96d3a0d13b560affa55ae9847dcece338ff5bb8cebc3c6d08a",
       "normalized_lf": true
     },
     "tools/build_study_papers.py": {
@@ -11,11 +11,11 @@
       "normalized_lf": true
     },
     "assets/polar_20260921/figure_manifest.json": {
-      "sha256": "ac2b466cbe8f5c0de7c3d5c59d2710470a5505ec7ab9aa191516abb46b75fec2",
+      "sha256": "3e893ab2d22d0e708212406bc2cb58ab15b168bfd0151a5ec0956a6a7385fdce",
       "normalized_lf": true
     },
     "output/pdf/polar_benchmark_report_v1.1.0.pdf": {
-      "sha256": "e12d6487b55c8e99835aa3d078e35bd2ec33798b7ade674a24f54ced6b7abe05",
+      "sha256": "a74cc1d65c41db6c27156e6de5b133b7a3b79bbe37e86123cca38e39c9b0757d",
       "normalized_lf": false
     }
   }

@@ -169,6 +169,19 @@ def benchmark_evidence(root: Path) -> dict:
     expected_hash = "5beab5852a8aea3375a2b7425308f4c89974acc2f135c1411d6994a4e52b813a"
     if manifest["summary_sha256"] != expected_hash or digest(summary_path, False) != expected_hash:
         raise ValueError("Locked final summary hash differs")
+    if manifest["schema_version"] != 1:
+        raise ValueError("Public evidence schema version differs")
+    for name in manifest["artifacts"]:
+        within(folder, name)
+    required_artifacts = {
+        "cohort.csv",
+        "data_audit.json",
+        "polar4_predictions.npz",
+        "polar9_predictions.npz",
+        "quarantine.csv",
+    }
+    if set(manifest["artifacts"]) != required_artifacts:
+        raise ValueError("Public evidence artifact inventory differs")
     if manifest["project_version"] != metadata(root):
         raise ValueError("Evidence release version differs")
     for name, item in manifest["artifacts"].items():
@@ -178,18 +191,70 @@ def benchmark_evidence(root: Path) -> dict:
     summary = read_json(summary_path)
     if summary["selection_lock_sha256"] != manifest["selection_lock_sha256"]:
         raise ValueError("Selection-lock binding differs")
+    if summary["prediction_manifest_sha256"] != manifest["source_prediction_manifest_sha256"]:
+        raise ValueError("Original prediction-manifest binding differs")
     if (
         summary["test_used_for_model_or_threshold_selection"]
         or summary["automatic_model_promotion"]
     ):
         raise ValueError("Post-test selection or promotion is not permitted")
-    if len(summary["comparisons"]) != 18 or set(manifest["tasks"]) != {"polar4", "polar9"}:
+    tasks = {"polar4", "polar9"}
+    if set(manifest["tasks"]) != tasks or set(summary["tasks"]) != tasks:
+        raise ValueError("Locked task inventory differs")
+    common_candidates = {
+        "adapted_convnextv2",
+        "adapted_siglip2",
+        "conservative_fusion",
+        "frozen_convnextv2_base",
+        "frozen_dinov2_base",
+        "frozen_dinov3_base",
+        "frozen_siglip2_base",
+        "prior_incumbent",
+        "replacement_fusion",
+    }
+    candidates = {
+        "polar4": common_candidates | {"historical_ensemble"},
+        "polar9": common_candidates | {"adapted_dinov2"},
+    }
+    expected_comparisons = {
+        (f"{task}__vs__{reference}", task, reference, "conservative_fusion")
+        for task in tasks
+        for reference in candidates[task] - {"conservative_fusion"}
+    }
+    observed_comparisons = [
+        (record["id"], record["task"], record["reference"], record["candidate"])
+        for record in summary["comparisons"]
+    ]
+    if (
+        len(observed_comparisons) != len(expected_comparisons)
+        or set(observed_comparisons) != expected_comparisons
+    ):
         raise ValueError("Locked comparison inventory differs")
+    class_names = [
+        "sitting",
+        "standing",
+        "walking",
+        "running",
+        "bending",
+        "jumping",
+        "lying",
+        "squatting",
+        "stretching",
+    ]
+    seeds = [42, 52, 62]
+    seed_candidates = {f"{role}_seed{seed}" for role in ("prior", "conservative") for seed in seeds}
     checked = 0
+    prediction_sets = 0
     for task, rows in (("polar4", 3329), ("polar9", 6984)):
         record = summary["tasks"][task]
-        if record["rows"] != rows or len(record["metrics"]) != 10:
+        public_task = manifest["tasks"][task]
+        if record["rows"] != rows or set(record["metrics"]) != candidates[task]:
             raise ValueError("Final evaluation population or panel differs")
+        expected_classes = class_names[:4] if task == "polar4" else class_names
+        if public_task["rows"] != rows or public_task["class_names"] != expected_classes:
+            raise ValueError("Public evaluation population or class order differs")
+        if [item["seed"] for item in record["seed_diagnostic"]["seeds"]] != seeds:
+            raise ValueError("Locked seed inventory differs")
         if (
             record["nominated_candidate"] != "conservative_fusion"
             or not record["nominee_unchanged_after_test"]
@@ -197,9 +262,12 @@ def benchmark_evidence(root: Path) -> dict:
             raise ValueError("Development nominee changed")
         if record["promotion_gate"]["all_checks_passed"]:
             raise ValueError("Locked prior retention differs")
-        if len(manifest["tasks"][task]["candidates"]) != 16:
+        if set(public_task["candidates"]) != candidates[task] | seed_candidates:
             raise ValueError("Public prediction inventory differs")
+        prediction_sets += len(public_task["candidates"])
         for name, expected in record["metrics"].items():
+            if expected["class_names"] != expected_classes:
+                raise ValueError("Final metric class order differs")
             actual = confusion_metrics(expected["confusion_matrix"])
             for key in ("rows", "errors", "macro_f1", "accuracy"):
                 close(actual[key], expected[key], f"{task}.{name}.{key}")
@@ -235,7 +303,7 @@ def benchmark_evidence(root: Path) -> dict:
             raise ValueError("Detected source group crosses retained splits")
     return {
         "confusion_based_systems_recomputed": checked,
-        "prediction_sets_hashed": 32,
+        "prediction_sets_hashed": prediction_sets,
         "audited_rows": len(cohort),
         "quarantined_rows": len(quarantine),
         "retention": "prior_incumbents_unchanged",
@@ -257,7 +325,7 @@ def release_artifacts(root: Path) -> int:
                 if digest(within(root, path), item["normalized_lf"]) != item["sha256"]:
                     raise ValueError(f"Release source/artifact differs: {path}")
                 count += section == "artifacts"
-    if count != 10:
+    if count != 14:
         raise ValueError("Current release artifact inventory differs")
     return count
 

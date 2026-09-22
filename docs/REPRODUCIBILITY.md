@@ -49,7 +49,8 @@ python tools/check_project.py
 
 CI uses CPU PyTorch without model downloads. The optional real-CUDA test is
 separately opt-in; skipping it is not GPU validation. Ruff is pinned and the
-allowed finding baseline remains zero.
+allowed finding baseline remains zero. CI tests both supported Python versions,
+3.11 and 3.12.
 
 ## Figures and report
 
@@ -96,4 +97,7 @@ The [original POLAR](POLAR_PUBLIC_REPORT.md) and [V-COCO](VCOCO_V2_EXTERNAL_TRAN
 reports remain unchanged. The executed notebook covers those studies, not the
 new nine-class benchmark. Legacy README and release builders target original
 Git trees; do not use them to overwrite current guides.
+[requirements-lock.txt](../requirements-lock.txt) preserves the earlier study's
+Python 3.11.9 / CUDA 12.6 environment; it is not a lockfile for the current final
+evaluation. Use the installation instructions above for the maintained package.
 [Provenance](PROJECT_HISTORY.md) binds 330 imported files.

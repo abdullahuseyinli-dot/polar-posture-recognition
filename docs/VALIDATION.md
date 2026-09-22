@@ -5,7 +5,7 @@ and saved predictions, not a new fit or independent checkpoint replication.
 
 | Check | Result and scope |
 | --- | --- |
-| Full pytest suite | **386 passed, one optional real-CUDA test skipped** |
+| Full pytest suite | **405 passed, one optional real-CUDA test skipped** |
 | Ruff regression check | **Zero findings** against the pinned zero-finding baseline |
 | Source compilation | Passed for source, experiments and tools |
 | Historical preservation | All **330 imported files** match recorded hashes |
@@ -14,8 +14,9 @@ and saved predictions, not a new fit or independent checkpoint replication.
 | Public probability integrity | **32 prediction sets** in two compressed, pickle-free NPZ archives |
 | Cohort consistency | 35,007 retained / 317 quarantined rows; predictions match test IDs, labels and groups |
 | Statistical replay | All 18 paired bootstrap/randomization records and the complete Holm family match |
-| Presentation integrity | Current local links, six historical-overview files, six new PNG/SVG files and report bindings verified |
-| PDF review | Six-page report checked for metadata, tables, figures and portable web links |
+| Evidence failure tests | Missing artifacts, candidates, seeds, comparisons and arrays; altered class order, cohort sizes and provenance bindings rejected |
+| Presentation integrity | Current local links, six historical-overview files, ten current PNG/SVG files and report bindings verified |
+| PDF review | Seven-page report checked for metadata, tables, figures, print readability and portable web links |
 | Wheel build | `polar_posture_recognition-1.1.0-py3-none-any.whl` built successfully |
 
 The suite emits 14 scikit-learn deprecation warnings about the existing SVC
@@ -40,14 +41,16 @@ git diff --check
 ```
 
 The [quality-gates workflow](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/actions/workflows/ci.yml?query=branch%3Amain)
-records Linux/CPU validation per published commit. It includes fast public
+records Linux/CPU validation for Python 3.11 and 3.12 per published commit. It includes fast public
 probability replay; full 5,000-draw bootstrap / 10,000-draw randomization replay
 is also available locally through `--resample`.
 
-The evidence verifier rejects changed prediction bytes, path escapes and metric
-mismatches. It checks fixed fusion arithmetic, cohort alignment and marginal
-interval consistency. The standard-library checker separately protects the
-selection-lock binding and prior-retention decisions.
+The evidence verifier rejects changed prediction bytes, path escapes, metric
+mismatches and incomplete inventories. It checks fixed fusion arithmetic, cohort
+alignment, seed-reference gains and marginal interval consistency. The
+standard-library checker also protects the original summary hash, selection-lock
+and prediction-manifest bindings, and prior-retention decisions. Reported check
+counts are derived from the records actually verified.
 
 ## Boundaries
 
