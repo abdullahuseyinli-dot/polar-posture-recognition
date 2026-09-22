@@ -31,3 +31,5 @@ jobs:
         run: python -m pytest
       - name: Verify evidence, figures and current documentation
         run: python tools/check_project.py
+      - name: Replay public benchmark probabilities
+        run: python tools/verify_benchmark_predictions.py

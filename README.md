@@ -1,84 +1,76 @@
 # POLAR Posture Recognition
 
-**A source-overlap-audited benchmark with DINOv2, ConvNeXt and complementary classifiers**
+Person-centric visual representations for four- and nine-class posture recognition.
 
 [![Quality gates](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/actions/workflows/ci.yml?query=branch%3Amain)
 [![Python](https://img.shields.io/badge/Python-3.11%E2%80%933.12-3776AB.svg)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-0F766E.svg)](LICENSE)
 
-This project studies how pretrained visual representations, person-context views and
-complementary classifiers recognize **sitting, standing, walking and running**.
-Its strongest system is a development-locked ensemble of adapted DINOv2/ConvNeXt
-models and linear/nonlinear classifiers on frozen DINOv2 features.
+This benchmark combines DINOv2 and SigLIP2 representations, person-context views,
+calibrated nonlinear classifiers and selective backbone adaptation. It compares
+DINOv2, DINOv3, SigLIP2 and ConvNeXt V2 under a common source-overlap-audited
+POLAR protocol, with locked evaluation and public per-example predictions.
 
-| Held-out macro-F1 | Accuracy | Evaluation |
-| ---: | ---: | --- |
-| **93.99%** | **94.56%** | 3,329 images · audited four-class POLAR subset · one locked test opening |
+## Results
 
-The macro-F1 95% bootstrap interval is **93.12–94.81%**. This is a custom four-class
-protocol, not a claim of state of the art on the original nine-class POLAR task.
+| Audited POLAR task | Retained prior macro-F1 | Evaluated nominee macro-F1 | Nominee accuracy | Test images |
+| --- | ---: | ---: | ---: | ---: |
+| Four classes | 94.75% | **95.21%** | **95.76%** | 3,329 |
+| Nine classes | 94.43% | **94.58%** | **94.72%** | 6,984 |
 
-[Results](docs/RESULTS.md) · [System design](docs/ARCHITECTURE.md) ·
-[Model card](docs/MODEL_CARD.md) · [Reproduce](docs/REPRODUCIBILITY.md) ·
-[Full report](docs/POLAR_PUBLIC_REPORT.md) · [PDF](output/pdf/polar_public_report_v1.0.0.pdf)
+The development-nominated conservative fusion improves on the original four-class
+ensemble by **+1.22 percentage points**, and on the nine-class adapted DINOv2
+reference by **+0.68 points**, with positive paired intervals and Holm-adjusted
+p-values below 0.05. Its smaller increments over the immediate prior do not pass
+all locked promotion gates, so the prior models remain retained. The table
+distinguishes those decisions from measured scores.
 
-## Held-out results
+[Complete results](docs/RESULTS.md) · [Technical report](docs/POLAR_BENCHMARK_REPORT.md) ·
+[PDF](output/pdf/polar_benchmark_report_v1.1.0.pdf) ·
+[Prediction evidence](results/polar_20260921/README.md) · [Comparison scope](docs/COMPARISONS.md)
 
-![Six predeclared POLAR systems with 95% macro-F1 bootstrap intervals.](assets/benchmark_results.png)
+![All 20 predeclared four- and nine-class systems, with source-group confidence intervals.](assets/polar_20260921/benchmark_comparison.png)
 
-| Predeclared system | Macro-F1 | Accuracy |
-| --- | ---: | ---: |
-| **Locked five-component ensemble** | **93.99%** | **94.56%** |
-| Frozen DINOv2-B multilayer + RBF SVM | 92.74% | 93.42% |
-| Frozen DINOv2-B multilayer + logistic regression | 92.58% | 93.24% |
-| DINOv2-B, top four blocks adapted | 92.52% | 93.27% |
-| DINOv2-S, fully adapted | 91.31% | 92.10% |
-| ConvNeXt-S, fully adapted | 89.14% | 89.94% |
+## System design
 
-The ensemble improves over the strongest component by **+1.25 percentage points**
-(95% paired interval **+0.65 to +1.86**). Its improvement interval is positive against
-each declared component. [Metrics](results/polar_test_metrics.csv) ·
-[Uncertainty](results/polar_test_uncertainty.json).
+The model uses an RGB image and a supplied target-person box. Frozen encoders
+see both the full frame and a person-context crop; adapted encoders use an
+aspect-preserving person view. A fixed probability blend combines complementary
+representations without learning a router on test labels.
 
-## How the system works
+![DINOv2 anchor, frozen SigLIP2 and adapted SigLIP2 combined with development-fixed probability weights.](assets/polar_20260921/system_overview.png)
 
-```mermaid
-flowchart LR
-    D["POLAR: four posture classes"] --> A["Source-overlap audit<br/>125 images quarantined before fitting"]
-    A --> S["Train / validation / sealed test"]
-    S --> N["Adapted ConvNeXt-S<br/>DINOv2-S · DINOv2-B"]
-    S --> F["Frozen DINOv2-B<br/>multilayer, two-view features"]
-    F --> H["Logistic regression<br/>Calibrated RBF SVM"]
-    N --> E["Development-locked<br/>probability ensemble"]
-    H --> E
-    E --> T["One held-out evaluation<br/>3,329 test images"]
-    classDef core fill:#e4f3ef,stroke:#00796b,color:#134e4a
-    class A,E,T core
-```
+For four classes the DINOv2 anchor is a calibrated frozen-feature classifier;
+for nine it is a three-seed adapted model. The conservative blend assigns 50% to
+the anchor and 25% to each SigLIP2 branch. The retained prior uses an equal blend
+of the anchor and frozen SigLIP2.
 
-The contribution is the audited protocol, person-centric adaptation and evidence-backed
-combination—not the invention of the pretrained DINOv2 or ConvNeXt backbones.
-Frozen features, adapted models and evaluation views are documented separately.
+The engineering contribution is the audited data protocol, person-preserving
+adaptation, representation comparison and reproducible fusion evaluation.
+The pretrained backbones are credited to their original authors; this is not
+a claim to have invented DINO or SigLIP.
 
-## Further results, with separate evaluation boundaries
+[Architecture and evidence map](docs/ARCHITECTURE.md) ·
+[Representation study](docs/REPRESENTATIONS.md) · [Model card](docs/MODEL_CARD.md)
 
-| Experiment | Macro-F1 | What this number means |
-| --- | ---: | --- |
-| Three-class collapse of the POLAR ensemble | **96.11%** | Secondary task: walking and running merged; not the four-class headline |
-| V-COCO scale-conditioned DINO stack | **86.63%** | Locked test: 6,077 people; custom three-class posture mapping |
-| DINO + SigLIP factorized reliability stack | **86.97%** | Later nested, image-grouped V-COCO development; not a new test score |
-| Matched DINOv3-B representation | **83.67%** | Same representation screen as DINOv2-B at 83.95%; not a winning replacement |
+## What the experiments establish
 
-These rows are not a ranking: tasks, populations and selection procedures differ.
-The [results guide](docs/RESULTS.md) includes the learning curve, per-class confusion,
-transfer improvements, factorized-head controls, DINOv3/SigLIP2 comparisons and
-their uncertainty. The [V-COCO report](docs/VCOCO_V2_EXTERNAL_TRANSFER.md) and
-[representation guide](docs/REPRESENTATIONS.md) provide the full context.
+- **Complementarity matters.** On nine classes, conservative fusion rescues 80
+  adapted-DINOv2 errors while harming 33 correct predictions: 47 fewer errors.
+- **More components are not automatically better.** On four classes, frozen
+  SigLIP2 alone reaches 95.19% macro-F1; the nominated fusion's 95.21% is not a
+  supported improvement over it.
+- **DINOv3 is included.** Its frozen two-view classifier reaches 93.05% on four
+  classes and 91.19% on nine. It is a measured comparator, not an omitted result.
 
-## Inspect and reproduce
+The nine-class nominee's remaining errors concentrate in plausible posture
+boundaries, including standing/walking and bending/stretching.
+[Per-class results and confusion matrix](docs/RESULTS.md#nine-class-error-structure)
+show the counts without changing labels or selecting a new model after evaluation.
 
-Verify result arithmetic, imported evidence hashes, figure sources, metadata and
-current documentation with Python's standard library; no GPU or dataset required:
+## Verify the results
+
+A standard-library check needs no dataset, model weights or GPU:
 
 ```bash
 git clone https://github.com/abdullahuseyinli-dot/polar-posture-recognition.git
@@ -86,25 +78,54 @@ cd polar-posture-recognition
 python tools/check_project.py
 ```
 
-[Installation and synthetic tests](docs/REPRODUCIBILITY.md) ·
+With the [project dependencies installed](docs/REPRODUCIBILITY.md), replay the
+published probabilities and, optionally, all paired statistical tests:
+
+```bash
+python tools/verify_benchmark_predictions.py
+python tools/verify_benchmark_predictions.py --resample
+```
+
+The evidence package includes 32 prediction sets, audited split membership and
+source hashes. It supports recalculating F1, accuracy, NLL, Brier, calibration,
+confusions, uncertainty and rescue/harm counts. Full checkpoint replay additionally
+requires locally obtained images and weights; neither is redistributed.
+
+## Evaluation scope
+
+These are **given-person-box still-image classification** results, not video
+recognition or person-detection scores. The original nine-class dataset contains
+35,324 images; the audited cohort contains 35,007 after source-overlap quarantine.
+The four-class test was used historically and is part of the nine-class test.
+Source grouping does not prove subject or scene independence.
+
+No directly matched external nine-class baseline has been verified, so no
+state-of-the-art claim is made. See the [external comparison table](docs/COMPARISONS.md)
+for the differences in task, taxonomy and evaluation population.
+
+## Earlier studies
+
+| Study | Macro-F1 | Evaluation boundary |
+| --- | ---: | --- |
+| Original four-class POLAR ensemble | 93.99% | Same 3,329 test images; historical study |
+| Three-class POLAR collapse | 96.11% | Walking/running merged; different task |
+| V-COCO scale-conditioned DINO stack | 86.63% | Target-trained, person-level held-out follow-up |
+| V-COCO DINO + SigLIP reliability stack | 86.97% | Nested development only; not a later test score |
+
+[Historical reports](docs/README.md#historical-studies) ·
 [Executed historical notebook](human_activity_classification.ipynb) ·
-[Documentation index](docs/README.md) · [Evidence inventory](results/README.md)
+[Full evidence inventory](results/README.md)
 
-Model weights, feature caches and source images are not distributed. Aggregate
-verification is not checkpoint replay. Full reproduction needs the original data,
-checkpoints and matching environment; the guide makes these boundaries explicit.
-
-## Companion architecture project
-
-[**ARFTR**](https://github.com/abdullahuseyinli-dot/arftr) develops actor-memory,
-factorized correction and temporal evidence on Okutama video. It has its own
-architecture, component studies and results. Its **85.38% adaptive development**
-score is not comparable with this project's **93.99% held-out POLAR** score.
+The separate [ARFTR project](https://github.com/abdullahuseyinli-dot/arftr)
+studies temporal actor-centered modeling on Okutama video. Its results are not
+POLAR baselines.
 
 ## Project information
 
-Author: **Abdulla Huseyinli**. Independent project version **1.0.0**.
-Original study v1/v2 identifiers remain unchanged; see [provenance](docs/PROJECT_HISTORY.md).
-[Citation](CITATION.cff) · [MIT License](LICENSE) ·
-[Third-party terms](THIRD_PARTY_NOTICES.md) · [Contributing](CONTRIBUTING.md) ·
-[Changelog](CHANGELOG.md)
+Abdulla Huseyinli · Version **1.1.0** · [Documentation](docs/README.md) ·
+[Reproducibility](docs/REPRODUCIBILITY.md) · [Validation](docs/VALIDATION.md) ·
+[Citation](CITATION.cff) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
+
+[MIT code licence](LICENSE) · [Dataset and model terms](THIRD_PARTY_NOTICES.md).
+Original study versions and all 330 imported source/evidence files remain preserved.
+[Project history](docs/PROJECT_HISTORY.md).

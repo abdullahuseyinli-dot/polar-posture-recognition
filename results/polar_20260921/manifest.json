@@ -1,0 +1,191 @@
+{
+  "artifacts": {
+    "cohort.csv": {
+      "bytes": 6493382,
+      "sha256": "02d909ce46588f0d6023c279644d3bdc4fc526b58d2ef71e69502dfbdb798d7e"
+    },
+    "data_audit.json": {
+      "bytes": 7627,
+      "sha256": "d3a72bfaafbc9a1ec1bf02a6b033d8d8cb9b6be67e7dc52a50e8d1e12ea7689e"
+    },
+    "polar4_predictions.npz": {
+      "bytes": 1646986,
+      "sha256": "fb4cb2b49057641d39d299e5afeefecda170e88490f58457939c043f59189fe7"
+    },
+    "polar9_predictions.npz": {
+      "bytes": 7789790,
+      "sha256": "56b1b580b3ca3fbaebd185f388b42338e4a449fc9b3b04d69dbad5ea3e0ac19c"
+    },
+    "quarantine.csv": {
+      "bytes": 58782,
+      "sha256": "4bb8dc3fa150cc6b3f529f6187b7bae09770503724d382ea673d886736eb84a3"
+    }
+  },
+  "project_version": "1.1.0",
+  "schema_version": 1,
+  "scope": "Unchanged prediction values and audited membership; no images, weights or local paths",
+  "selection_lock_sha256": "b8334696ee21ab850c9b8d364d89ace59f8065e6551dae62bf9defe5185a5bbe",
+  "source_data_audit_sha256": "f0d3e3fe04ebf915abcffbc9fbba8757240bc588b44623da4dabaa3d7a334353",
+  "source_prediction_manifest_sha256": "11a3bbb446a8db8c2823ebd9e8ff7a86029248e27bc7e1b4cdbbb502f6837249",
+  "summary_path": "docs/research/20260921_final_evaluation/results/summary.json",
+  "summary_sha256": "5beab5852a8aea3375a2b7425308f4c89974acc2f135c1411d6994a4e52b813a",
+  "tasks": {
+    "polar4": {
+      "candidates": {
+        "adapted_convnextv2": {
+          "role": "locked_comparison",
+          "sha256": "f82a942d99fb55ec7f82f229b5e0292584542b7544f289e75d37ff842ac88e96"
+        },
+        "adapted_siglip2": {
+          "role": "locked_comparison",
+          "sha256": "71efb257ad42223b00d06abafdacbdd755dc42a6085b90c366fefec7fd3f22f4"
+        },
+        "conservative_fusion": {
+          "role": "locked_comparison",
+          "sha256": "81922fb48e8cfa9701eccfce2c51dcdfd0dd114c813c4e220ac8d041f979f48d"
+        },
+        "conservative_seed42": {
+          "role": "seed_diagnostic",
+          "sha256": "580758d8dcfaa68e83b3493b5510c990579140c4b6fc570e5c40fc31f45f16b7"
+        },
+        "conservative_seed52": {
+          "role": "seed_diagnostic",
+          "sha256": "2e20fc38eb679dabbfd17d1d6b8932d79dc58386499f7b4fa949baddc0001878"
+        },
+        "conservative_seed62": {
+          "role": "seed_diagnostic",
+          "sha256": "82b8820e07641278c7c30a735aa61b93fe991cef521331ae11115ea30b171ef5"
+        },
+        "frozen_convnextv2_base": {
+          "role": "locked_comparison",
+          "sha256": "a2955c70f976046c1a045c6405d533613b2145a4ecb805d550c6b57a2306566f"
+        },
+        "frozen_dinov2_base": {
+          "role": "locked_comparison",
+          "sha256": "a562a49efdba5a029a3a071d85c90b26bc23e955bc306a4d0e316dd21fd09f35"
+        },
+        "frozen_dinov3_base": {
+          "role": "locked_comparison",
+          "sha256": "4dc22b5a44af0b2f4a4013e2e1d8d7b6e0d89cb2f679b1bc8ec45cb7b937f12b"
+        },
+        "frozen_siglip2_base": {
+          "role": "locked_comparison",
+          "sha256": "f6600e0d4e6ec9878af6221ee43ee5b6e447db848c7883d228e77fa502c1ce24"
+        },
+        "historical_ensemble": {
+          "role": "locked_comparison",
+          "sha256": "83575da568bfaf3236a277677787863f11c853001f1ed0c073c5a255e8b076fe"
+        },
+        "prior_incumbent": {
+          "role": "locked_comparison",
+          "sha256": "7919694ef325c3734906c4136e58835479cc194cfaba8ab96c37f7e846aafea0"
+        },
+        "prior_seed42": {
+          "role": "seed_diagnostic",
+          "sha256": "7919694ef325c3734906c4136e58835479cc194cfaba8ab96c37f7e846aafea0"
+        },
+        "prior_seed52": {
+          "role": "seed_diagnostic",
+          "sha256": "7919694ef325c3734906c4136e58835479cc194cfaba8ab96c37f7e846aafea0"
+        },
+        "prior_seed62": {
+          "role": "seed_diagnostic",
+          "sha256": "7919694ef325c3734906c4136e58835479cc194cfaba8ab96c37f7e846aafea0"
+        },
+        "replacement_fusion": {
+          "role": "locked_comparison",
+          "sha256": "d4e1a87cb0141d95e0f65c9319298222ad0594991cf7d94a1ea31c51240bd67e"
+        }
+      },
+      "class_names": [
+        "sitting",
+        "standing",
+        "walking",
+        "running"
+      ],
+      "rows": 3329,
+      "source_groups_sha256": "3210260d1d269796ad0e75b23e34fdf21d06c99e7d34aacc0c9e887b91ad4f45"
+    },
+    "polar9": {
+      "candidates": {
+        "adapted_convnextv2": {
+          "role": "locked_comparison",
+          "sha256": "05ffbc087fe5436b21a217893a522f74768f611447db8140666ff36e17462988"
+        },
+        "adapted_dinov2": {
+          "role": "locked_comparison",
+          "sha256": "7d119abf2ef8683fc00f9e2011fac1300c94512400d298ab8f4a1230a279ba43"
+        },
+        "adapted_siglip2": {
+          "role": "locked_comparison",
+          "sha256": "48e480dd7f992057798bf18dc149ebe71163f32537aaad5cf6c6ade4412c834c"
+        },
+        "conservative_fusion": {
+          "role": "locked_comparison",
+          "sha256": "b3a8c271bb98180b865d4713fc6faa1a8ed23faa92f805cb97372b23b36a2618"
+        },
+        "conservative_seed42": {
+          "role": "seed_diagnostic",
+          "sha256": "98fa62eff29a104ee8a9baa1b6c798abbc4af9580d3cf71206c889351d6caa1e"
+        },
+        "conservative_seed52": {
+          "role": "seed_diagnostic",
+          "sha256": "8a13428518376c7646b2606549b72c0fc635f2456219363321d3134b8fc18ad5"
+        },
+        "conservative_seed62": {
+          "role": "seed_diagnostic",
+          "sha256": "b92c584f7252dd6dd36daadc71e4e6bfed4d809306907e64c210d4e7533d9639"
+        },
+        "frozen_convnextv2_base": {
+          "role": "locked_comparison",
+          "sha256": "9f9f99e64a328c387658d306f3c7cab4a9f1a00da8ff42d567512f6458f0deb3"
+        },
+        "frozen_dinov2_base": {
+          "role": "locked_comparison",
+          "sha256": "67b61bc78c1821651a4b414503ed32805abbacc8de949f53c2c8fd059307a3b6"
+        },
+        "frozen_dinov3_base": {
+          "role": "locked_comparison",
+          "sha256": "2d2781ddcf2488a87b3ca1072a9fea96b8ba41f0bb5c683b3f09475e635bb8af"
+        },
+        "frozen_siglip2_base": {
+          "role": "locked_comparison",
+          "sha256": "87d02bca2977c9ee43607ab68a977e39440e48e0820effb75d3b4a91843baad6"
+        },
+        "prior_incumbent": {
+          "role": "locked_comparison",
+          "sha256": "a5787e3ef67c4223495d70521e3f78a1a18d5daadd053b8f0d727ea2a4f38742"
+        },
+        "prior_seed42": {
+          "role": "seed_diagnostic",
+          "sha256": "a234e53fd08887ecba382e8af8af518ffd5aa57afb259da42aa8a16f19f21fe2"
+        },
+        "prior_seed52": {
+          "role": "seed_diagnostic",
+          "sha256": "cf5d2a4021da8a69c9e3545c92ba3605b215553201c8a0ab4d7d8297344a008d"
+        },
+        "prior_seed62": {
+          "role": "seed_diagnostic",
+          "sha256": "60b2544b4cf8b9c205656d61a3865993676c7aa60bdd4d8a007f914f44907207"
+        },
+        "replacement_fusion": {
+          "role": "locked_comparison",
+          "sha256": "cceb1252b923202d9211544c92870e0978b997786325a60da83e4375913dd3a9"
+        }
+      },
+      "class_names": [
+        "sitting",
+        "standing",
+        "walking",
+        "running",
+        "bending",
+        "jumping",
+        "lying",
+        "squatting",
+        "stretching"
+      ],
+      "rows": 6984,
+      "source_groups_sha256": "ede4a739a967f9700e78838645fe3a459d171d59b1d8967768bef4335770ac24"
+    }
+  }
+}

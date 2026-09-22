@@ -1,5 +1,19 @@
 # Changelog
 
+## Standalone project 1.1.0 — 2026-09-22
+
+- Completed the audited nine-class POLAR benchmark and fixed four-class comparison
+  panel: DINOv2, DINOv3, SigLIP2 and ConvNeXt V2, with frozen and adapted controls.
+- Reported development-nominated fusion at 95.21% four-class and 94.58% nine-class
+  macro-F1; kept prior-model retention decisions unchanged.
+- Added 32 portable prediction sets, complete audited cohort/quarantine metadata,
+  metric replay and full paired-resampling verification without source images.
+- Updated the main page, system diagram, results, error analysis, model card and
+  reproduction guide; added a current technical report and PDF.
+- Preserved all 330 imported files, original study reports and byte-exact final
+  evaluation artifacts. No post-test model selection or additional training.
+- Updated citation/archive metadata; no Zenodo deposit or peer-review claim.
+
 ## Standalone project 1.0.0 — 2026-09-20
 
 - Established `polar-posture-recognition` as a standalone benchmark, linked to ARFTR.

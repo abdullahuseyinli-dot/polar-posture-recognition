@@ -1,19 +1,28 @@
 # Data boundary
 
-No POLAR or COCO source images, feature caches or trained weights are distributed.
+No source images, feature caches or trained weights are distributed.
+Obtain POLAR from its [publisher](https://doi.org/10.17632/hvnsh7rwz7.1) and
+assess its annotation and upstream image terms independently.
 
-The main benchmark uses four POLAR classes: sitting, standing, walking and running.
-The pre-fit source audit excluded 125 images in 61 cross-split components, leaving
-9,958 training, 3,327 validation and 3,329 test images.
-[Audit](../results/polar_data_audit.json) · [Protocol](../docs/POLAR_SCALE_STUDY_PROTOCOL.md).
+| Audited cohort | Train | Validation | Test |
+| --- | ---: | ---: | ---: |
+| Nine classes | 21,057 | 6,966 | 6,984 |
+| Four-class subset | 9,958 | 3,327 | 3,329 |
 
-Obtain POLAR from its [publisher](https://doi.org/10.17632/hvnsh7rwz7.1), then follow
-the historical preparation recipe in the [reproduction guide](../docs/REPRODUCIBILITY.md).
-Dataset and upstream image licences must be assessed independently.
+The nine-class audit excludes 317 images across 154 cross-split source components,
+including the 125-image historical quarantine. Original split membership is
+preserved. Four-class membership is unchanged by the additional audit.
 
-The tracked `manifest.csv` belongs to the **earlier 285-image COCO pilot**, not
-the 16,614-image clean POLAR population. Do not train the POLAR experiment from it.
-POLAR manifests containing workstation-local image paths remain non-distributed.
+The public [cohort and quarantine CSVs](../results/polar_20260921/README.md)
+contain image IDs, splits, labels, target boxes, source groups and checksums,
+without image paths or media. The audit cannot prove subject/session independence
+or absence of every near duplicate. The four-class test was historically inspected
+and is part of the nine-class test.
 
-V-COCO follows its official image memberships but maps actions to three exclusive
-posture classes. This is not the standard agent/role-AP benchmark.
+The tracked `data/manifest.csv` belongs to the **earlier 285-image COCO pilot**,
+not POLAR. Do not use it to train the current benchmark.
+[Reproduction requirements](../docs/REPRODUCIBILITY.md) ·
+[Model card](../docs/MODEL_CARD.md).
+
+V-COCO uses official image memberships with a custom three-class person-level
+posture mapping; it is not the standard agent/role-AP task.

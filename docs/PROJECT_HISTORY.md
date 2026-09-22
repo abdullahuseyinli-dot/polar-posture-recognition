@@ -18,6 +18,12 @@ from the new repository; aggregate diagrams and charts are included.
 
 ## Version namespaces
 
+Project **1.1.0**, dated 22 September 2026, adds the completed four-/nine-class
+comparison, public prediction evidence, current technical report and refreshed
+presentation. It does not replace the original report versions or change the
+330 imported-file hashes. All final-test promotion decisions remain unchanged.
+[Release notes](releases/PROJECT_1.1.0.md).
+
 Project `1.0.0` is not a rewrite of study v1, v2 or v3. Original report PDFs, result
 manifests and study release notes keep their original dates and identifiers.
 The companion ARFTR also begins at independent project version 1.0.0. Neither new

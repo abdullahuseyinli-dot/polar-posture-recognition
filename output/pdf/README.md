@@ -1,11 +1,14 @@
-# Preserved study reports
+# Technical reports
 
-| Report | Historical study version |
+| Report | Identity |
 | --- | --- |
-| [POLAR benchmark](polar_public_report_v1.0.0.pdf) | Study 1.0.0 |
-| [V-COCO person-level transfer](vcoco_v2_external_transfer_v2.0.0.pdf) | Study 2.0.0 |
+| [Four-/nine-class benchmark](polar_benchmark_report_v1.1.0.pdf) | Current project 1.1.0; [Markdown](../../docs/POLAR_BENCHMARK_REPORT.md), [hash manifest](polar_benchmark_report_v1.1.0.manifest.json) |
+| [Original POLAR benchmark](polar_public_report_v1.0.0.pdf) | Preserved study 1.0.0 |
+| [V-COCO transfer](vcoco_v2_external_transfer_v2.0.0.pdf) | Preserved study 2.0.0 |
 
-These PDFs retain their original bytes, study titles, dates and version identifiers.
-The standalone repository also begins at project version 1.0.0; these are different
-version namespaces. [Project provenance](../../docs/PROJECT_HISTORY.md).
-For current navigation and later DINOv3 results, start with the [documentation](../../docs/README.md).
+Original PDFs retain their bytes, titles, dates and study identifiers. Project
+and original-study versions are separate namespaces.
+[Provenance](../../docs/PROJECT_HISTORY.md) ·
+[Build instructions](../../docs/REPRODUCIBILITY.md).
+
+These are independent technical reports; no peer-review or deposit status is implied.

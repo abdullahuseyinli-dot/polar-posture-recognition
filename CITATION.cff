@@ -1,8 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this benchmark, cite this project and the original datasets and backbones."
-title: "POLAR Posture Recognition: Audited DINOv2 and ConvNeXt Benchmarks"
+title: "POLAR Posture Recognition: Person-Centric Four- and Nine-Class Benchmarks"
 type: software
-version: "1.0.0"
+version: "1.1.0"
+date-released: "2026-09-22"
 authors:
   - family-names: Huseyinli
     given-names: Abdulla
@@ -10,19 +11,20 @@ repository-code: "https://github.com/abdullahuseyinli-dot/polar-posture-recognit
 url: "https://github.com/abdullahuseyinli-dot/polar-posture-recognition"
 license: MIT
 abstract: >-
-  Source-overlap-audited four-class POLAR posture classification with adapted
-  DINOv2 and ConvNeXt, frozen multilayer feature classifiers and a locked ensemble.
-  The ensemble achieves 93.988333 percent macro-F1 on 3,329 held-out images.
-  Includes a separately evaluated person-level V-COCO transfer study and later
-  matched DINOv2, DINOv3 and SigLIP2 development comparisons. Version 1.0.0
-  identifies this standalone project, preserving the original study versions.
-  The custom tasks do not establish a standard POLAR or V-COCO leaderboard rank.
+  Source-overlap-audited four- and nine-class POLAR posture classification with
+  DINOv2, DINOv3, SigLIP2 and ConvNeXt V2. Development-nominated conservative
+  fusions obtain 95.211019 and 94.583075 percent macro-F1 on 3,329 and 6,984 test
+  images respectively. Prior models remain retained under the locked promotion
+  rules. Includes public probabilities, audited membership, paired statistics,
+  training code, technical reports and historical POLAR/V-COCO studies.
+  The previously inspected four-class test is nested in the nine-class test;
+  results do not establish an external state-of-the-art ranking.
 keywords:
   - posture recognition
   - POLAR
   - DINOv2
   - DINOv3
-  - ConvNeXt
+  - ConvNeXt V2
   - SigLIP2
   - V-COCO
   - calibrated ensembles

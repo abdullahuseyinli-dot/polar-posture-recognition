@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "project_version": "1.1.0",
+  "sources": {
+    "docs/research/20260921_final_evaluation/results/summary.json": {
+      "sha256": "5beab5852a8aea3375a2b7425308f4c89974acc2f135c1411d6994a4e52b813a",
+      "normalized_lf": false
+    },
+    "tools/render_benchmark_release.py": {
+      "sha256": "0fcf396ce85a89366484e407db07a9d896cbebe3df1e7a67207e5518300d9d5b",
+      "normalized_lf": true
+    }
+  },
+  "artifacts": {
+    "assets/polar_20260921/benchmark_comparison.png": {
+      "sha256": "a6ab629139ffe76a75864089db1a79fbffe9b5f0ef292efb34a05ddb8fb39ea2",
+      "normalized_lf": false
+    },
+    "assets/polar_20260921/nine_class_confusion.png": {
+      "sha256": "8443572bbc7f09aabf6dfb2c3b1595ced6aaf8596ab8b419752eb9c559528754",
+      "normalized_lf": false
+    },
+    "assets/polar_20260921/system_overview.png": {
+      "sha256": "0606999b226ade188542518b4690f623f1d1c6217865213cae1e1cf7228affda",
+      "normalized_lf": false
+    },
+    "assets/polar_20260921/benchmark_comparison.svg": {
+      "sha256": "f674f8e5cd05aa8b451a6bcdc5511cfb53566982b67a125697aaf3b4a413ab2f",
+      "normalized_lf": true
+    },
+    "assets/polar_20260921/nine_class_confusion.svg": {
+      "sha256": "273198205fac79f0be170716a0edfd015aa8fbaa2fdfb50cc0a26415a9b777ee",
+      "normalized_lf": true
+    },
+    "assets/polar_20260921/system_overview.svg": {
+      "sha256": "7ab3713ccf1992978e40b25739a5021f0f4813aa1842cacd3051e46a37ea0c67",
+      "normalized_lf": true
+    }
+  }
+}

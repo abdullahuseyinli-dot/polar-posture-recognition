@@ -8,16 +8,33 @@ import json
 import math
 import re
 import tomllib
+from collections import Counter
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_DOCS = (
-    "README.md", "CONTRIBUTING.md", "docs/README.md", "docs/RESULTS.md",
-    "docs/ARCHITECTURE.md", "docs/REPRESENTATIONS.md", "docs/MODEL_CARD.md",
-    "docs/REPRODUCIBILITY.md", "docs/PROJECT_HISTORY.md", "docs/VALIDATION.md",
-    "assets/README.md", "results/README.md", "data/README.md",
-    "experiments/README.md", "output/pdf/README.md",
+    "README.md",
+    "CONTRIBUTING.md",
+    "docs/README.md",
+    "docs/RESULTS.md",
+    "docs/ARCHITECTURE.md",
+    "docs/REPRESENTATIONS.md",
+    "docs/MODEL_CARD.md",
+    "docs/REPRODUCIBILITY.md",
+    "docs/PROJECT_HISTORY.md",
+    "docs/VALIDATION.md",
+    "assets/README.md",
+    "results/README.md",
+    "data/README.md",
+    "experiments/README.md",
+    "output/pdf/README.md",
+    "docs/POLAR_BENCHMARK_REPORT.md",
+    "docs/COMPARISONS.md",
+    "docs/PORTFOLIO_ARTICLE.md",
+    "docs/releases/PROJECT_1.1.0.md",
+    "results/polar_20260921/README.md",
+    "THIRD_PARTY_NOTICES.md",
 )
 
 
@@ -64,8 +81,12 @@ def confusion_metrics(matrix: list[list[int]]) -> dict:
         denominator = sum(matrix[i]) + sum(row[i] for row in matrix)
         f1.append(2 * matrix[i][i] / denominator if denominator else 0.0)
     correct = sum(matrix[i][i] for i in range(n))
-    return {"rows": total, "accuracy": correct / total, "macro_f1": sum(f1) / n,
-            "errors": total - correct}
+    return {
+        "rows": total,
+        "accuracy": correct / total,
+        "macro_f1": sum(f1) / n,
+        "errors": total - correct,
+    }
 
 
 def close(actual: float, expected: float, name: str) -> None:
@@ -77,7 +98,12 @@ def evidence(root: Path) -> dict:
     checked = 0
     for table, matrices, key, population in (
         ("polar_test_metrics.csv", "polar_test_confusions.json", "candidate", 3329),
-        ("vcoco_v2/official_test_metrics.csv", "vcoco_v2/official_test_confusions.json", "method", 6077),
+        (
+            "vcoco_v2/official_test_metrics.csv",
+            "vcoco_v2/official_test_confusions.json",
+            "method",
+            6077,
+        ),
     ):
         confusions = read_json(root / "results" / matrices)
         with (root / "results" / table).open(encoding="utf-8", newline="") as stream:
@@ -104,15 +130,21 @@ def evidence(root: Path) -> dict:
     if vcoco_gate["official_test_label_open_count"] != 1 or vcoco_gate["test_rows_read"] != 6077:
         raise ValueError("V-COCO test gate differs")
     delta = read_json(root / "results/vcoco_v2/official_test_uncertainty.json")
-    close(float(scores["scale_conditioned_stacking"]["macro_f1"])
-          - float(scores["historical_v1_dino"]["macro_f1"]),
-          delta["point_estimate"], "V-COCO paired gain")
+    close(
+        float(scores["scale_conditioned_stacking"]["macro_f1"])
+        - float(scores["historical_v1_dino"]["macro_f1"]),
+        delta["point_estimate"],
+        "V-COCO paired gain",
+    )
     decisions = read_json(root / "results/vcoco_v3/source_tag_promotion_decisions.json")
     if decisions["representations"]["decisions"]["dinov3_base"]["general_candidate"]:
         raise ValueError("DINOv3 promotion claim changed")
-    return {"confusion_based_systems_recomputed": checked,
-            "polar_test_rows": 3329, "vcoco_test_people": 6077,
-            "scope": "Proper scores and intervals are preserved exports, not recomputed"}
+    return {
+        "confusion_based_systems_recomputed": checked,
+        "polar_test_rows": 3329,
+        "vcoco_test_people": 6077,
+        "scope": "Proper scores and intervals are preserved exports, not recomputed",
+    }
 
 
 def metadata(root: Path) -> str:
@@ -121,9 +153,113 @@ def metadata(root: Path) -> str:
     version = re.search(r'^version:\s*[\'"]?([^\'"\s]+)', cff, re.MULTILINE)
     if project["name"] != "polar-posture-recognition" or not version:
         raise ValueError("Project identity differs")
-    if project["version"] != version.group(1) or read_json(root / ".zenodo.json")["version"] != project["version"]:
+    if (
+        project["version"] != version.group(1)
+        or read_json(root / ".zenodo.json")["version"] != project["version"]
+    ):
         raise ValueError("Version metadata disagrees")
     return project["version"]
+
+
+def benchmark_evidence(root: Path) -> dict:
+    """Check the portable release without importing numerical or GPU packages."""
+    folder = root / "results/polar_20260921"
+    manifest = read_json(folder / "manifest.json")
+    summary_path = within(root, manifest["summary_path"])
+    expected_hash = "5beab5852a8aea3375a2b7425308f4c89974acc2f135c1411d6994a4e52b813a"
+    if manifest["summary_sha256"] != expected_hash or digest(summary_path, False) != expected_hash:
+        raise ValueError("Locked final summary hash differs")
+    if manifest["project_version"] != metadata(root):
+        raise ValueError("Evidence release version differs")
+    for name, item in manifest["artifacts"].items():
+        path = within(folder, name)
+        if digest(path, False) != item["sha256"] or path.stat().st_size != item["bytes"]:
+            raise ValueError(f"Public evidence bytes differ: {name}")
+    summary = read_json(summary_path)
+    if summary["selection_lock_sha256"] != manifest["selection_lock_sha256"]:
+        raise ValueError("Selection-lock binding differs")
+    if (
+        summary["test_used_for_model_or_threshold_selection"]
+        or summary["automatic_model_promotion"]
+    ):
+        raise ValueError("Post-test selection or promotion is not permitted")
+    if len(summary["comparisons"]) != 18 or set(manifest["tasks"]) != {"polar4", "polar9"}:
+        raise ValueError("Locked comparison inventory differs")
+    checked = 0
+    for task, rows in (("polar4", 3329), ("polar9", 6984)):
+        record = summary["tasks"][task]
+        if record["rows"] != rows or len(record["metrics"]) != 10:
+            raise ValueError("Final evaluation population or panel differs")
+        if (
+            record["nominated_candidate"] != "conservative_fusion"
+            or not record["nominee_unchanged_after_test"]
+        ):
+            raise ValueError("Development nominee changed")
+        if record["promotion_gate"]["all_checks_passed"]:
+            raise ValueError("Locked prior retention differs")
+        if len(manifest["tasks"][task]["candidates"]) != 16:
+            raise ValueError("Public prediction inventory differs")
+        for name, expected in record["metrics"].items():
+            actual = confusion_metrics(expected["confusion_matrix"])
+            for key in ("rows", "errors", "macro_f1", "accuracy"):
+                close(actual[key], expected[key], f"{task}.{name}.{key}")
+            if actual["rows"] != rows:
+                raise ValueError("Confusion population differs")
+            checked += 1
+    audit = read_json(folder / "data_audit.json")
+    with (folder / "cohort.csv").open(encoding="utf-8", newline="") as stream:
+        cohort = list(csv.DictReader(stream))
+    with (folder / "quarantine.csv").open(encoding="utf-8", newline="") as stream:
+        quarantine = list(csv.DictReader(stream))
+    if len(cohort) != 35007 or len(quarantine) != 317:
+        raise ValueError("Audited cohort/quarantine size differs")
+    ids = [row["image_id"] for row in cohort + quarantine]
+    if len(set(ids)) != 35324:
+        raise ValueError("Cohort/quarantine IDs overlap or repeat")
+    counts = Counter((row["split"], row["label"]) for row in cohort)
+    expected_counts = Counter(
+        {
+            (split, label): count
+            for split, values in audit["source_audited_counts"].items()
+            for label, count in values.items()
+        }
+    )
+    if counts != expected_counts:
+        raise ValueError("Audited class/split counts differ")
+    groups = {}
+    for row in cohort:
+        if int(row["label_index"]) != audit["class_to_index"][row["label"]]:
+            raise ValueError("Audited class mapping differs")
+        group = row["source_group"]
+        if groups.setdefault(group, row["split"]) != row["split"]:
+            raise ValueError("Detected source group crosses retained splits")
+    return {
+        "confusion_based_systems_recomputed": checked,
+        "prediction_sets_hashed": 32,
+        "audited_rows": len(cohort),
+        "quarantined_rows": len(quarantine),
+        "retention": "prior_incumbents_unchanged",
+    }
+
+
+def release_artifacts(root: Path) -> int:
+    """Check current charts and report separately from imported historical assets."""
+    count = 0
+    for name in (
+        "assets/polar_20260921/figure_manifest.json",
+        "output/pdf/polar_benchmark_report_v1.1.0.manifest.json",
+    ):
+        manifest = read_json(root / name)
+        if manifest["project_version"] != metadata(root):
+            raise ValueError("Presentation release version differs")
+        for section in ("sources", "artifacts"):
+            for path, item in manifest.get(section, {}).items():
+                if digest(within(root, path), item["normalized_lf"]) != item["sha256"]:
+                    raise ValueError(f"Release source/artifact differs: {path}")
+                count += section == "artifacts"
+    if count != 10:
+        raise ValueError("Current release artifact inventory differs")
+    return count
 
 
 def navigation(root: Path) -> int:
@@ -156,13 +292,22 @@ def figures(root: Path) -> int:
 
 
 def main() -> None:
-    print(json.dumps({
-        "status": "PASS", "version": metadata(ROOT),
-        "preserved_historical_files": preserved_files(ROOT),
-        "evidence": evidence(ROOT), "current_links_checked": navigation(ROOT),
-        "current_figure_files": figures(ROOT),
-        "checkpoint_replay": False,
-    }, indent=2))
+    print(
+        json.dumps(
+            {
+                "status": "PASS",
+                "version": metadata(ROOT),
+                "preserved_historical_files": preserved_files(ROOT),
+                "evidence": evidence(ROOT),
+                "current_links_checked": navigation(ROOT),
+                "current_figure_files": figures(ROOT),
+                "current_benchmark": benchmark_evidence(ROOT),
+                "release_artifact_bindings": release_artifacts(ROOT),
+                "checkpoint_replay": False,
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

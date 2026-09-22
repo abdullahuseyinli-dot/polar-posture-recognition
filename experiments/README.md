@@ -1,5 +1,25 @@
 # Experiment entry points
 
+## Current four-/nine-class benchmark
+
+| Phase | Entry points |
+| --- | --- |
+| Source audit and nine-class manifests | `tools/prepare_polar_benchmark_data.py` |
+| CUDA frozen features and screens | `cache_polar_benchmark_features.py`, `screen_polar_benchmark.py` |
+| Person-preserving adaptation | `train_polar_benchmark.py`, `confirm_polar_benchmark_recipe.py` |
+| Bounded SigLIP2/ConvNeXt V2 development | `train_polar_bounded.py`, `summarize_polar_bounded.py` |
+| Locked final preparation | `prepare_polar_locked.py` |
+| Final neural/head refits | `train_polar_locked.py`, `fit_polar_locked_head.py` |
+| Sealed test features and predictions | `cache_polar_locked_test_features.py`, `evaluate_polar_locked.py` |
+| Paired final statistics | `analyze_polar_locked.py` |
+
+The phase is complete. For read-only verification use the public
+[prediction replay](../docs/REPRODUCIBILITY.md), not training or test-opening
+commands. Original local configurations are documented in the
+[locked protocol](../docs/research/20260921_final_evaluation/PROTOCOL.md).
+
+## Historical studies
+
 Historical implementations are preserved for provenance, not silently rewritten
 as a new protocol. Do not run queues or test-opening scripts just to inspect results.
 

@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "polar-posture-recognition"
-version = "1.0.0"
-description = "Source-overlap-controlled transfer-learning benchmarks for image-based human activity classification"
+version = "1.1.0"
+description = "Audited four- and nine-class POLAR posture benchmarks with reproducible prediction evidence"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 dependencies = [

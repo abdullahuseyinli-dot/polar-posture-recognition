@@ -1,0 +1,242 @@
+{
+  "additional_source_audited_four_class_counts": {
+    "test": {
+      "bending": 0,
+      "jumping": 0,
+      "lying": 0,
+      "running": 736,
+      "sitting": 1034,
+      "squatting": 0,
+      "standing": 921,
+      "stretching": 0,
+      "walking": 638
+    },
+    "train": {
+      "bending": 0,
+      "jumping": 0,
+      "lying": 0,
+      "running": 2223,
+      "sitting": 3021,
+      "squatting": 0,
+      "standing": 2720,
+      "stretching": 0,
+      "walking": 1994
+    },
+    "val": {
+      "bending": 0,
+      "jumping": 0,
+      "lying": 0,
+      "running": 712,
+      "sitting": 1000,
+      "squatting": 0,
+      "standing": 967,
+      "stretching": 0,
+      "walking": 648
+    }
+  },
+  "additional_source_audited_four_class_rows": 16614,
+  "ambiguous_person_or_action_records": 0,
+  "artifacts": {
+    "feature_pool_development.csv": {
+      "rows": 28259,
+      "sha256": "749197c653781d8299cfdb125193b7e82940abcf0bf8281cfe902ff29023054d"
+    },
+    "polar4_legacy_clean_manifest.csv": {
+      "rows": 16614,
+      "sha256": "ec8cb2b21091f2b5f930f365da02afdde3304a3f582bb7e48217f5e1d653b36b"
+    },
+    "polar4_legacy_development_manifest.csv": {
+      "rows": 13285,
+      "sha256": "bee75ddc844caa23ab33d818c8f92a59b6418943e719baf659d3d5ba8d0cfdf9"
+    },
+    "polar4_legacy_test_manifest.csv": {
+      "rows": 3329,
+      "sha256": "fa88d3bd92d8e50e5ee89231c4547983eec14c42a54df75f9a65d684f5fd4036"
+    },
+    "polar4_source_audited_clean_manifest.csv": {
+      "rows": 16614,
+      "sha256": "ec8cb2b21091f2b5f930f365da02afdde3304a3f582bb7e48217f5e1d653b36b"
+    },
+    "polar4_source_audited_development_manifest.csv": {
+      "rows": 13285,
+      "sha256": "bee75ddc844caa23ab33d818c8f92a59b6418943e719baf659d3d5ba8d0cfdf9"
+    },
+    "polar4_source_audited_test_manifest.csv": {
+      "rows": 3329,
+      "sha256": "fa88d3bd92d8e50e5ee89231c4547983eec14c42a54df75f9a65d684f5fd4036"
+    },
+    "polar9_clean_manifest.csv": {
+      "rows": 35007,
+      "sha256": "5327726cf1c8aabefd08e14e3161dc3e3fa38aaa5173f614a529e8dbc5e3c4a5"
+    },
+    "polar9_confirmed_source_pairs.csv": {
+      "rows": 231,
+      "sha256": "658e670db351c7acd3839ba08ae394c2332206bbecba34c8563cb5fa5dfba0a7"
+    },
+    "polar9_development_manifest.csv": {
+      "rows": 28023,
+      "sha256": "1124aa43d75ecd070ab6d28499be73b2a326bfa17a58b8d9fd385ee3b286afc0"
+    },
+    "polar9_near_cross_split_candidates.csv": {
+      "rows": 313,
+      "sha256": "55cee7c1ae6206fc36ea816372ec6af803a70048ba4fa47e59fdd1b821279f38"
+    },
+    "polar9_official_development_manifest.csv": {
+      "rows": 28259,
+      "sha256": "749197c653781d8299cfdb125193b7e82940abcf0bf8281cfe902ff29023054d"
+    },
+    "polar9_official_manifest.csv": {
+      "rows": 35324,
+      "sha256": "04a271f079638424e0edbaa65fdfcd862674b1b427242967e95d34d58159a061"
+    },
+    "polar9_official_test_manifest.csv": {
+      "rows": 7065,
+      "sha256": "dcdc8b3c2254224d6396ebfc6d312e13a56a13a9459ad395adfd733b5473e55a"
+    },
+    "polar9_quarantine.csv": {
+      "rows": 317,
+      "sha256": "e8851a22c20bd7cbb2d974ec97886b0cfc2c6a39081ec050bd567d69ec0b693a"
+    },
+    "polar9_test_manifest.csv": {
+      "rows": 6984,
+      "sha256": "53b76898e05b84149759ad90b896fcbacd52e5edb44882f99821ebcb3064bf22"
+    },
+    "polar9_train_manifest.csv": {
+      "rows": 21057,
+      "sha256": "db262130ee40c293879060de767adf612cc1b4a7b57c704a8a96ad68319268f4"
+    },
+    "polar9_val_manifest.csv": {
+      "rows": 6966,
+      "sha256": "db6e40eb89afa22c415f5cc87186ba853bee55d3eeb432494d383e9cc61b4618"
+    }
+  },
+  "class_to_index": {
+    "bending": 4,
+    "jumping": 5,
+    "lying": 6,
+    "running": 3,
+    "sitting": 0,
+    "squatting": 7,
+    "standing": 1,
+    "stretching": 8,
+    "walking": 2
+  },
+  "dataset_doi": "10.17632/hvnsh7rwz7.1",
+  "decode_failures": 0,
+  "dimension_mismatches": 0,
+  "exact_or_canonical_source_identity_edges": 68,
+  "historical_quarantine_rows_inherited": 125,
+  "historical_quarantine_sha256": "8accae1295c7587012cbca14834747b955bc9da566daf0b2826950ee4cf4515e",
+  "invalid_or_clipped_boxes": 0,
+  "legacy_data_lock_sha256": "eae58e41ba62f553ebb643c8fbdb870219aa2cd563eeb01436ad38267e3c7963",
+  "legacy_four_class_additional_nine_class_quarantine_flags": 0,
+  "legacy_four_class_membership_changed": false,
+  "legacy_four_class_rows": 16614,
+  "limitations": [
+    "Known annotated target boxes: classification, not person detection or action detection AP.",
+    "No verified subject, photographer-session or scene-disjoint identifiers.",
+    "Exact/source-name plus cross-split pHash radius6/correlation0.90 audit is label-blind but cannot prove absence of all near duplicates.",
+    "Historical four-class embedding-confirmed quarantine is inherited; no fresh all-nine-class embedding retrieval audit has yet run.",
+    "Non-identical same-split near duplicates are not exhaustively grouped; source_group is not a person/scene identifier.",
+    "Nine-class audited cohort differs from original official population; report official and audited protocols separately."
+  ],
+  "new_test_predictions_read": false,
+  "official_counts": {
+    "test": {
+      "bending": 775,
+      "jumping": 687,
+      "lying": 676,
+      "running": 739,
+      "sitting": 1043,
+      "squatting": 854,
+      "standing": 936,
+      "stretching": 714,
+      "walking": 641
+    },
+    "train": {
+      "bending": 2304,
+      "jumping": 2125,
+      "lying": 2210,
+      "running": 2230,
+      "sitting": 3043,
+      "squatting": 2584,
+      "standing": 2740,
+      "stretching": 1956,
+      "walking": 2002
+    },
+    "val": {
+      "bending": 788,
+      "jumping": 750,
+      "lying": 695,
+      "running": 716,
+      "sitting": 1015,
+      "squatting": 815,
+      "standing": 980,
+      "stretching": 652,
+      "walking": 654
+    }
+  },
+  "official_rows": 35324,
+  "official_split_file_sha256": {
+    "test": "ff6a5e2b043293c02b2831545beafb22126468694234f7c8b00f7a0972cc98c8",
+    "train": "e5371ed641ee176b524e7e674afd26826208194ed294783dee8c94a5a4f0692e",
+    "trainval": "c954394196259d17ae2e7efe9dfcf89eed0ed81f40d84012334594982e282bde",
+    "val": "59b7dc11f29dbbafd7c0b12a6e6b69d42ed9a4c321297b171ce7ae8ecbe87864"
+  },
+  "official_split_membership_moved": false,
+  "phash_candidates": 313,
+  "phash_confirmed_pairs": 163,
+  "preparation_module_sha256": "85e7dfbee39be2b664a0fa2159908e2bfb2f6fd97702a49aa134f21a8d5c9bf9",
+  "quarantine_components": 154,
+  "quarantine_rows": 317,
+  "source_audited_counts": {
+    "test": {
+      "bending": 769,
+      "jumping": 679,
+      "lying": 668,
+      "running": 736,
+      "sitting": 1034,
+      "squatting": 836,
+      "standing": 921,
+      "stretching": 703,
+      "walking": 638
+    },
+    "train": {
+      "bending": 2290,
+      "jumping": 2113,
+      "lying": 2197,
+      "running": 2223,
+      "sitting": 3021,
+      "squatting": 2556,
+      "standing": 2720,
+      "stretching": 1943,
+      "walking": 1994
+    },
+    "val": {
+      "bending": 778,
+      "jumping": 741,
+      "lying": 684,
+      "running": 712,
+      "sitting": 1000,
+      "squatting": 793,
+      "standing": 967,
+      "stretching": 643,
+      "walking": 648
+    }
+  },
+  "source_audited_rows": 35007,
+  "source_to_label": {
+    "bendover": "bending",
+    "jump": "jumping",
+    "lying": "lying",
+    "run": "running",
+    "sit": "sitting",
+    "squat": "squatting",
+    "stand": "standing",
+    "stretch": "stretching",
+    "walk": "walking"
+  },
+  "status": "LOCKED_BEFORE_NEW_BENCHMARK_FITTING",
+  "test_exposure": "four-class subset previously evaluated; nine-class test is not wholly unseen",
+  "test_labels_used_for_selection": false
+}

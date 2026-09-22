@@ -16,7 +16,7 @@ from tools.check_project import (
 
 
 def test_public_evidence_and_identity():
-    assert metadata(ROOT) == "1.0.0"
+    assert metadata(ROOT) == "1.1.0"
     assert evidence(ROOT)["confusion_based_systems_recomputed"] == 8
     assert preserved_files(ROOT) == 330
 

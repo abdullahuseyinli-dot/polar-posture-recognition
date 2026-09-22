@@ -1,30 +1,57 @@
-# Standalone project validation
+# Release validation
 
-Validation for project 1.0.0 covers the public package, not a new training run.
+Project 1.1.0, checked 22 September 2026. These checks validate the public release
+and saved predictions, not a new fit or independent checkpoint replication.
 
-| Check | Scope |
+| Check | Result and scope |
 | --- | --- |
-| `python tools/check_project.py` | Version consistency, current links, 330 preserved historical files, eight confusion-derived systems, fixed test gates and six new figure artifacts |
-| `python -m pytest` | Synthetic/model-contract/evidence tests; no dataset or model download |
-| `python tools/check_style.py` | Pinned Ruff; no new findings against a zero-finding extraction baseline |
-| `python -m compileall -q src experiments tools` | Source compilation |
-| Wheel build | Independently named package metadata and source inclusion |
-| CPU GitHub Actions | Clean Linux checkout without workstation assets |
+| Full pytest suite | **386 passed, one optional real-CUDA test skipped** |
+| Ruff regression check | **Zero findings** against the pinned zero-finding baseline |
+| Source compilation | Passed for source, experiments and tools |
+| Historical preservation | All **330 imported files** match recorded hashes |
+| Historical metric arithmetic | Eight systems verified from confusion counts |
+| Current metric replay | All **20 candidates**, six seed pairs and 18 paired transitions match |
+| Public probability integrity | **32 prediction sets** in two compressed, pickle-free NPZ archives |
+| Cohort consistency | 35,007 retained / 317 quarantined rows; predictions match test IDs, labels and groups |
+| Statistical replay | All 18 paired bootstrap/randomization records and the complete Holm family match |
+| Presentation integrity | Current local links, six historical-overview files, six new PNG/SVG files and report bindings verified |
+| PDF review | Six-page report checked for metadata, tables, figures and portable web links |
+| Wheel build | `polar_posture_recognition-1.1.0-py3-none-any.whl` built successfully |
 
-Local verification on 20 September 2026:
+The suite emits 14 scikit-learn deprecation warnings about the existing SVC
+probability argument. They do not change these results; the preserved fitting
+recipes have not been rewritten to suppress them.
 
-- **102 tests passed, four CUDA-only tests skipped**; no training or model download.
-- **330 historical files** verified against the recorded original Git revisions.
-- **Eight systems** recomputed from confusion counts: six POLAR, two V-COCO.
-- **132 current local documentation links** and **six new figure artifacts** verified.
-- **Zero Ruff findings**; compilation passed.
-- `polar_posture_recognition-1.0.0-py3-none-any.whl` built successfully.
-- Current PNG figures visually inspected; no clipped labels or source photographs.
+## Repeat the checks
+
+```bash
+python tools/check_style.py
+python -m compileall -q src experiments tools
+python -m pytest
+python tools/check_project.py
+python tools/verify_benchmark_predictions.py
+python tools/verify_benchmark_predictions.py --resample
+git diff --check
+```
 
 The [quality-gates workflow](https://github.com/abdullahuseyinli-dot/polar-posture-recognition/actions/workflows/ci.yml?query=branch%3Amain)
-records the clean Linux/CPU checkout result for each published commit.
+records Linux/CPU validation per published commit. It includes fast public
+probability replay; full 5,000-draw bootstrap / 10,000-draw randomization replay
+is also available locally through `--resample`.
 
-NLL, Brier, calibration and confidence intervals are hash-preserved exports;
-their row-level computation is not replayed from aggregate confusion matrices.
-Full model replay, gated DINOv3 access and any GPU deployment benchmark remain
-outside this packaging validation.
+The evidence verifier rejects changed prediction bytes, path escapes and metric
+mismatches. It checks fixed fusion arithmetic, cohort alignment and marginal
+interval consistency. The standard-library checker separately protects the
+selection-lock binding and prior-retention decisions.
+
+## Boundaries
+
+No training, image retrieval, foundation-model download or model-promotion change
+is part of release preparation. Numerical replay uses the recorded statistical
+implementation, not an independently implemented estimator. Full model replay
+requires local data and weights. The real-CUDA metadata preflight from the
+completed evaluation is documented in its [completion record](research/20260921_final_evaluation/RESULTS.md);
+it is distinct from the optional test skipped in release validation.
+
+[Prediction package](../results/polar_20260921/README.md) ·
+[Reproduction guide](REPRODUCIBILITY.md) · [Project history](PROJECT_HISTORY.md).

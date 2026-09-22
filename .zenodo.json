@@ -1,6 +1,6 @@
 {
-  "title": "POLAR Posture Recognition: Audited DINOv2 and ConvNeXt Benchmarks",
-  "description": "Source-overlap-audited four-class POLAR benchmark: a locked ensemble reaches 93.988333% macro-F1 and 94.562932% accuracy on 3,329 held-out images. Includes original training code, tests, aggregate evidence, uncertainty, reports, figures, the V-COCO person-level transfer follow-up and matched DINOv2/DINOv3/SigLIP2 development screens. These custom tasks are not standard leaderboard comparisons. Independent project version 1.0.0 preserves the original study versions and scores. Source media and checkpoints are not redistributed. This metadata does not itself indicate a Zenodo deposit or DOI.",
+  "title": "POLAR Posture Recognition: Person-Centric Four- and Nine-Class Benchmarks",
+  "description": "Audited four- and nine-class POLAR benchmark comparing DINOv2, DINOv3, SigLIP2 and ConvNeXt V2. Development-nominated conservative fusion obtains 95.211019% macro-F1 on 3,329 four-class test images and 94.583075% on 6,984 nine-class images. The immediate prior models remain retained under the locked promotion rules. Includes 32 public prediction sets, audited cohort membership, paired statistics, training code, technical reports, figures and preserved historical POLAR/V-COCO studies. The four-class test was previously inspected and is nested in the nine-class test; no external state-of-the-art ranking is established. Images and model weights are not redistributed. This metadata does not indicate a Zenodo deposit, DOI or peer review.",
   "creators": [
     {
       "name": "Huseyinli, Abdulla"
@@ -9,14 +9,14 @@
   "access_right": "open",
   "license": "mit",
   "upload_type": "software",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "language": "eng",
   "keywords": [
     "posture recognition",
     "POLAR",
     "DINOv2",
     "DINOv3",
-    "ConvNeXt",
+    "ConvNeXt V2",
     "SigLIP2",
     "V-COCO",
     "reproducible research"

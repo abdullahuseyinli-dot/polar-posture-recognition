@@ -65,16 +65,17 @@ documents the model's intended uses, limitations, and training-data context.
 
 ## DINOv3-Base
 
-The later matched screen uses the gated
+The matched V-COCO screen and current POLAR benchmark use the gated
 [`facebook/dinov3-vitb16-pretrain-lvd1689m`](https://huggingface.co/facebook/dinov3-vitb16-pretrain-lvd1689m)
 checkpoint under Meta's [DINOv3 License](https://github.com/facebookresearch/dinov3/blob/main/LICENSE.md),
 not this repository's MIT licence. Access must be obtained from the provider.
 No weights or credentials are distributed. See `docs/DINOV3_ACCESS.md` for the
-recorded revision and hashes.
+historical screen and `docs/REPRESENTATIONS.md` for the POLAR checkpoint and
+processor-reconstruction caveat.
 
 ## SigLIP2-Base
 
-The V-COCO follow-ups use Google's
+The POLAR benchmark and V-COCO follow-ups use Google's
 [`siglip2-base-patch16-224`](https://huggingface.co/google/siglip2-base-patch16-224)
 model. Refer to its provider model card and licence for use of the pretrained
 parameters. This repository distributes only experiment code and numerical results,
@@ -87,6 +88,13 @@ The torchvision source is distributed under the
 [BSD 3-Clause License](https://github.com/pytorch/vision/blob/main/LICENSE).
 Torchvision notes that pretrained models can also be subject to terms derived
 from their training data; those upstream rights are not relicensed here.
+
+## ConvNeXt V2
+
+The current POLAR benchmark also uses a pretrained ConvNeXt V2-Base encoder.
+See the [official implementation](https://github.com/facebookresearch/ConvNeXt-V2)
+and the checkpoint provider's model card for the applicable parameter and data
+terms. Neither the checkpoint nor its training images are redistributed here.
 
 ## PyTorch Grad-CAM
 
