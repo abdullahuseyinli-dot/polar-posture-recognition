@@ -79,9 +79,11 @@ not public turnkey commands. Keep the
 [DINOv3 processor caveat](REPRESENTATIONS.md).
 
 Final fitting used PyTorch 2.11.0 + CUDA 12.8, torchvision 0.26.0 and Transformers
-5.5.3 on Windows. Neural fits used bfloat16; frozen kernels used FP32 with TF32
-disabled and CPU libsvm fitting. Dependency ranges are not a bitwise environment
-lock. Recorded session times can omit resumed work or feature extraction; they
+5.5.3 on Windows. Transformers is pinned to that recorded version: newer releases
+changed SigLIP's internal module layout and failed the clean-runner model-contract
+tests. Neural fits used bfloat16; frozen kernels used FP32 with TF32 disabled and
+CPU libsvm fitting. Other dependency ranges are not a bitwise environment lock.
+Recorded session times can omit resumed work or feature extraction; they
 are not deployment latency.
 
 A fresh replication must define its data and selection boundary before fitting.

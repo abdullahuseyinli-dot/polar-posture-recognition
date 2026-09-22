@@ -13,6 +13,8 @@
 - Preserved all 330 imported files, original study reports and byte-exact final
   evaluation artifacts. No post-test model selection or additional training.
 - Updated citation/archive metadata; no Zenodo deposit or peer-review claim.
+- Pinned Transformers to the recorded 5.5.3 fitting environment after clean Linux
+  CI detected an incompatible newer SigLIP module layout. Model code is unchanged.
 
 ## Standalone project 1.0.0 — 2026-09-20
 

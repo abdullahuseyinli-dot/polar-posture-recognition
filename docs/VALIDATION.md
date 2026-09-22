@@ -22,6 +22,11 @@ The suite emits 14 scikit-learn deprecation warnings about the existing SVC
 probability argument. They do not change these results; the preserved fitting
 recipes have not been rewritten to suppress them.
 
+The first clean Linux run exposed a newer-Transformers SigLIP interface mismatch
+in three model-contract tests. The dependency is now pinned to the actual fitting
+version, **5.5.3**, rather than changing the recorded model implementation.
+See the workflow history for the failed run and its corrected successor.
+
 ## Repeat the checks
 
 ```bash
